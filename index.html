@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أبو خضر | المنيو الرسمي</title>
+    <title>مطبخ نشوى | المنيو الرسمي</title>
     
     <link rel="manifest" href="manifest.json">
     
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="أبو خضر">
-    <link rel="apple-touch-icon" href="images/logooo.jpg">
+    <meta name="apple-mobile-web-app-title" content="مطبخ نشوى">
+    <link class="brand-logo-img" rel="apple-touch-icon" href="images/loogoo.jpg">
     
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -198,8 +198,8 @@
 
     <div id="splash-screen">
         <div class="loader-content">
-            <img src="./images/logooo.jpg" class="loader-logo-big">
-            <h2 class="loader-text">أبو خضر</h2>
+            <img src="./images/loogoo.jpg" class="loader-logo-big">
+            <h2 class="loader-text">مطبخ نشوى</h2>
             <p class="loader-slogan">طعم ياخدك في حته تانيه ✨</p>
             <div class="loading-bar"><span></span></div>
         </div>
@@ -209,7 +209,7 @@
         <div class="header-top">
             <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙</button>
             <div class="header-logo-container">
-                <img src="./images/logooo.jpg" class="header-logo">
+                <img src="./images/loogoo.jpg" class="header-logo">
             </div>
             <div class="cart-trigger-container">
                 <div class="cart-trigger" onclick="toggleCart(true)" id="cartBtn">
@@ -233,7 +233,7 @@
             <a href="tel:01034874663">01034874663</a>
             <a href="tel:01008915741">01008915741</a>
         </div>
-        <p class="footer-rights">جميع الحقوق محفوظة لـ مطعم أبو خضر 2026 ©</p>
+        <p class="footer-rights">جميع الحقوق محفوظة لـ مطبخ نشوى 2026 ©</p>
         <div class="dev-credit">
             Designed by eng / Anas Gaber shehata
             <a href="tel:01003800314">📞 01003800314</a>
@@ -258,7 +258,6 @@
     </div>
 
     <script>
-        // تعديل رابط الشيت الجديد وجعله يقرأ كملف CSV تلقائياً ومباشر
         const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTN2hMpYgfUE_IZQkKuGFlgLbbxHgCNblTSdqSDD8_wxzORisUVLVI3_YdQ5OKMvDANSJ9jt3gU2uLR/pub?output=csv';
         const IMAGES_PATH = "./images/"; 
         let menuData = [], cart = [];
@@ -281,15 +280,46 @@
             });
         }
 
+        // دالة مخصصة لتحليل أسطر الـ CSV بدقة لتجنب تداخل الأقسام بسبب الفواصل والنصوص
+        function parseCSVLine(text) {
+            let p = '', r = [];
+            let q = false;
+            for (let i = 0; i < text.length; i++) {
+                let c = text[i];
+                if (c === '"') { q = !q; }
+                else if (c === ',' && !q) { r.push(p); p = ''; }
+                else if (c === '\r') { }
+                else { p += c; }
+            }
+            r.push(p);
+            return r;
+        }
+
         async function loadMenu() {
             try {
                 const response = await fetch(csvUrl);
                 const data = await response.text();
-                const rows = data.split('\n').slice(1);
-                menuData = rows.map(row => {
-                    const col = row.split(',');
-                    return { category: col[0]?.trim(), name: col[1]?.trim(), price: col[2]?.trim(), desc: col[3]?.trim() || "", img: `${IMAGES_PATH}${col[1]?.trim()}.jpg` };
-                }).filter(i => i.name);
+                const lines = data.split('\n');
+                
+                menuData = [];
+                for(let i = 1; i < lines.length; i++) {
+                    if(!lines[i].trim()) continue;
+                    const col = parseCSVLine(lines[i]);
+                    let categoryName = col[0]?.replace(/^"|"$/g, '').trim();
+                    let itemName = col[1]?.replace(/^"|"$/g, '').trim();
+                    let itemPrice = col[2]?.replace(/^"|"$/g, '').trim();
+                    let itemDesc = col[3]?.replace(/^"|"$/g, '').trim() || "";
+                    
+                    if(itemName) {
+                        menuData.push({
+                            category: categoryName,
+                            name: itemName,
+                            price: itemPrice,
+                            desc: itemDesc,
+                            img: `${IMAGES_PATH}${itemName}.jpg`
+                        });
+                    }
+                }
                 
                 preloadImages(menuData);
                 renderNav();
@@ -312,7 +342,7 @@
                     <span>${cat.category}</span>
                 </div>
             `).join('');
-            filterCat(menuData[0].category);
+            if(menuData.length > 0) filterCat(menuData[0].category);
         }
 
         function filterCat(cat, el) {
@@ -408,7 +438,7 @@
             const n = document.getElementById('uName').value, p = document.getElementById('uPhone').value, a = document.getElementById('uAddr').value;
             if(!n || !p || !a || cart.length === 0) return alert("يرجى إكمال البيانات واختيار الأصناف");
             
-            let msg = `طلب جديد - مطعم أبو خضر\n\n👤 الاسم: ${n}\n📱 الموبايل: ${p}\n📍 العنوان: ${a}\n\nالطلبات:\n` 
+            let msg = `طلب جديد - مطبخ نشوى\n\n👤 الاسم: ${n}\n📱 الموبايل: ${p}\n📍 العنوان: ${a}\n\nالطلبات:\n` 
                       + cart.map(i => `- ${i.name} (${i.price} ج.م)`).join('\n')
                       + `\n\n💰 الإجمالي: ${currentTotal} ج.م`;
                       
