@@ -8,15 +8,15 @@
     
     <style>
         :root {
-            /* ألوان المنيو الفاتح والمبهج الجديد بالكامل */
-            --bg-color: #faf9f6;          /* خلفية بيضاء كريمي ناعمة */
-            --card-bg: #ffffff;           /* كروت بيضاء صافية */
-            --accent-color: #e67e22;      /* برتقالي دافئ يفتح النفس */
-            --text-color: #2c3e50;        /* نصوص غامقة واضحة جداً */
+            /* الألوان الجديدة: أغمق سنة، مريحة وفخمة جداً */
+            --bg-color: #f0f0ed;          /* خلفية رمادي دافئ ناعمة وأغمق سنه */
+            --card-bg: #ffffff;           /* كروت بيضاء صافية تبرز الأصناف */
+            --accent-color: #d35400;      /* برتقالي داكن وفخم يناسب الأكل البيتي */
+            --text-color: #2c3e50;        /* نصوص رئيسية غامقة وواضحة */
             --text-muted: #7f8c8d;       /* نصوص فرعية رمادية */
-            --glass-border: rgba(230, 126, 34, 0.15); /* حدود ناعمة بلون المطبخ */
-            --ios-blue: #27ae60;          /* زرار طلب أخضر مبهج ومريح */
-            --ios-red: #e74c3c;           /* لون الحذف والتنبيهات */
+            --glass-border: rgba(211, 84, 0, 0.12);
+            --ios-green: #27ae60;         /* لون زرار الطلب الأخضر المبهج */
+            --ios-red: #c0392b;           /* لون الحذف والتنبيهات الداكن */
         }
 
         * {
@@ -33,7 +33,7 @@
             overflow-x: hidden;
         }
 
-        /* --- شاشة التحميل الذكية الفاتحة --- */
+        /* --- شاشة التحميل الذكية --- */
         #splash-screen {
             position: fixed;
             top: 0;
@@ -61,14 +61,14 @@
             object-fit: cover;
             border-radius: 50%;
             margin-bottom: 40px;
-            box-shadow: 0 10px 30px rgba(230, 126, 34, 0.15);
+            box-shadow: 0 10px 30px rgba(211, 84, 0, 0.15);
             animation: luxuryIntro 2.5s forwards cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         .progress-bar-container {
             width: 200px;
             height: 4px;
-            background: #f0f0f0;
+            background: #e0e0e0;
             border-radius: 10px;
             overflow: hidden;
         }
@@ -76,8 +76,8 @@
         .progress-bar {
             width: 0%;
             height: 100%;
-            background: linear-gradient(90deg, var(--accent-color), #f1c40f);
-            box-shadow: 0 0 10px rgba(230, 126, 34, 0.3);
+            background: linear-gradient(90deg, var(--accent-color), #f39c12);
+            box-shadow: 0 0 10px rgba(211, 84, 0, 0.2);
             animation: advancedLoad 2.2s forwards cubic-bezier(0.1, 0.8, 0.3, 1);
         }
 
@@ -107,22 +107,21 @@
             font-size: 2.4rem;
             color: var(--accent-color);
             font-weight: 800;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
         }
 
-        /* سلة المشتريات العلوية العائمة الفاتحة */
+        /* سلة المشتريات العائمة */
         .cart-icon-container {
             position: fixed;
             top: 20px;
             left: 20px;
             z-index: 99;
             background: #ffffff;
-            border: 1px solid rgba(0,0,0,0.08);
+            border: 1px solid rgba(0,0,0,0.06);
             padding: 12px;
             border-radius: 50%;
             cursor: pointer;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            transition: transform 0.2s, background-color 0.2s;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            transition: transform 0.2s;
         }
         .cart-icon-container:active { transform: scale(0.85); }
         .cart-icon-container i { color: var(--accent-color); font-size: 1.4rem; }
@@ -143,18 +142,14 @@
             align-items: center;
         }
 
-        /* أنيميشن النبضة عند الإضافة للسلة */
-        .pulse-animation {
-            animation: iconPulse 0.4s ease-out;
-        }
+        .pulse-animation { animation: iconPulse 0.4s ease-out; }
         @keyframes iconPulse {
             0% { transform: scale(1); }
             50% { transform: scale(1.3); background: var(--accent-color); }
-            50.1% { transform: scale(1.3); }
             100% { transform: scale(1); }
         }
 
-        /* شريط الأقسام المبهج */
+        /* شريط الأقسام */
         .categories-nav {
             display: flex;
             gap: 10px;
@@ -167,27 +162,27 @@
 
         .category-btn {
             background: #ffffff;
-            border: 1px solid rgba(0,0,0,0.06);
+            border: 1px solid rgba(0,0,0,0.05);
             color: var(--text-color);
             padding: 10px 20px;
             border-radius: 30px;
             white-space: nowrap;
             cursor: pointer;
             font-weight: 600;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
-            transition: all 0.2.5s ease;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.01);
+            transition: all 0.25s ease;
         }
         .category-btn.active {
             background: var(--accent-color);
             color: #fff;
             border-color: var(--accent-color);
-            box-shadow: 0 4px 12px rgba(230, 126, 34, 0.25);
+            box-shadow: 0 4px 12px rgba(211, 84, 0, 0.2);
         }
 
-        /* كروت الأصناف الفاتحة بالكامل */
+        /* كروت الأصناف المحسنة والمقاومة لأخطاء البيانات */
         .menu-card {
             background: var(--card-bg);
-            border: 1px solid rgba(0,0,0,0.04);
+            border: 1px solid rgba(0,0,0,0.03);
             border-radius: 18px;
             padding: 18px;
             margin-bottom: 16px;
@@ -195,37 +190,41 @@
             justify-content: space-between;
             align-items: center;
             gap: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
         }
 
-        .item-details { flex: 1; text-align: right; }
-        .item-details h3 { font-size: 1.2rem; margin-bottom: 6px; color: var(--text-color); font-weight: 700; }
+        .item-details { flex: 1; text-align: right; display: flex; flex-direction: column; justify-content: center; }
+        .item-details h3 { font-size: 1.2rem; color: var(--text-color); font-weight: 700; margin-bottom: 4px; }
         .item-details p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.4; }
 
         .item-actions-wrapper {
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            min-width: 135px;
+            gap: 8px;
+            justify-content: center;
+            align-items: flex-end;
+            min-width: 120px;
         }
 
+        /* صف السعر المعدل ليكون دائماً سطر واحد متناسق */
         .price-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: #fafaf8;
+            background: #fcfcf9;
             border: 1px solid rgba(0,0,0,0.03);
             padding: 6px 10px;
             border-radius: 12px;
-            gap: 6px;
+            gap: 10px;
+            width: 100%;
         }
 
         .size-text { font-size: 0.85rem; color: var(--text-muted); white-space: nowrap; }
-        .price-text { font-size: 1rem; color: var(--accent-color); font-weight: 700; white-space: nowrap; }
+        .price-text { font-size: 1.05rem; color: var(--accent-color); font-weight: 700; white-space: nowrap; }
 
-        /* زر طلب الأخضر المبهج الإنسيابي الفوري */
+        /* زر طلب الأخضر الفخم */
         .ios-order-btn {
-            background: var(--ios-blue);
+            background: var(--ios-green);
             color: #ffffff;
             border: none;
             padding: 6px 14px;
@@ -233,14 +232,12 @@
             font-size: 0.85rem;
             font-weight: bold;
             cursor: pointer;
-            transition: transform 0.1s ease, background-color 0.2s;
-            box-shadow: 0 2px 6px rgba(39, 174, 96, 0.2);
+            transition: transform 0.1s ease;
+            box-shadow: 0 2px 6px rgba(39, 174, 96, 0.15);
         }
-        .ios-order-btn:active {
-            transform: scale(0.88);
-        }
+        .ios-order-btn:active { transform: scale(0.88); }
 
-        /* --- شاشة السلة الفاتحة (Slide Over) --- */
+        /* --- شاشة السلة الفخمة (Slide Over) --- */
         #cart-page {
             position: fixed;
             top: 0;
@@ -257,54 +254,21 @@
             transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
         }
         
-        #cart-page.active {
-            transform: translateX(0);
-        }
-        
-        .cart-page-container {
-            max-width: 600px;
-            width: 100%;
-            margin: 0 auto;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .cart-page-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 30px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #f0f0f0;
-        }
+        #cart-page.active { transform: translateX(0); }
+        .cart-page-container { max-width: 600px; width: 100%; margin: 0 auto; flex: 1; display: flex; flex-direction: column; }
+        .cart-page-header { display: flex; align-items: center; gap: 15px; margin-bottom: 30px; padding-bottom: 15px; border-bottom: 1px solid #f0f0f0; }
         
         .back-to-menu-btn {
-            background: #f5f5f5;
-            border: none;
-            color: var(--text-color);
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            font-size: 1.1rem;
+            background: #f5f5f5; border: none; color: var(--text-color); width: 40px; height: 40px; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 1.1rem;
         }
 
         .cart-page-title { font-size: 1.5rem; font-weight: 700; color: var(--text-color); }
         .cart-list { flex: 1; margin-bottom: 25px; }
 
         .cart-item-card {
-            background: #fafafa;
-            border: 1px solid rgba(0,0,0,0.03);
-            border-radius: 14px;
-            padding: 14px;
-            margin-bottom: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            background: #fafafa; border: 1px solid rgba(0,0,0,0.02); border-radius: 14px; padding: 14px;
+            margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;
             animation: cartItemSlide 0.3s ease-out;
         }
         @keyframes cartItemSlide { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
@@ -313,67 +277,28 @@
         .cart-item-price { color: var(--accent-color); font-size: 0.95rem; font-weight: bold; text-align: right; }
 
         .ios-delete-icon-btn {
-            background: rgba(231, 76, 60, 0.08);
-            color: var(--ios-red);
-            border: none;
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1rem;
-            cursor: pointer;
+            background: rgba(192, 41, 43, 0.08); color: var(--ios-red); border: none; width: 36px; height: 36px;
+            border-radius: 10px; display: flex; justify-content: center; align-items: center; font-size: 1rem; cursor: pointer;
         }
 
         .total-summary-card {
-            background: rgba(230, 126, 34, 0.05);
-            border: 1px solid rgba(230, 126, 34, 0.12);
-            border-radius: 14px;
-            padding: 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: var(--accent-color);
-            margin-bottom: 30px;
+            background: rgba(211, 84, 0, 0.05); border: 1px solid rgba(211, 84, 0, 0.12); border-radius: 14px;
+            padding: 16px; display: flex; justify-content: space-between; align-items: center; font-size: 1.2rem;
+            font-weight: bold; color: var(--accent-color); margin-bottom: 30px;
         }
 
-        /* فورم المعلومات الثلاثية */
-        .customer-inputs-group {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-            text-align: right;
-            margin-bottom: 35px;
-        }
-
+        /* فورم المعلومات الثلاثية المحدثة */
+        .customer-inputs-group { display: flex; flex-direction: column; gap: 14px; text-align: right; margin-bottom: 35px; }
         .customer-inputs-group label { font-size: 0.95rem; color: var(--text-color); font-weight: 600; }
         .customer-inputs-group input {
-            background: #fafafa;
-            border: 1px solid #e0e0e0;
-            border-radius: 12px;
-            padding: 14px;
-            color: var(--text-color);
-            font-size: 1rem;
-            text-align: right;
-            outline: none;
-            transition: border-color 0.2s;
+            background: #fafafa; border: 1px solid #e0e0e0; border-radius: 12px; padding: 14px;
+            color: var(--text-color); font-size: 1rem; text-align: right; outline: none; transition: border-color 0.2s;
         }
         .customer-inputs-group input:focus { border-color: var(--accent-color); background: #ffffff; }
 
         .ios-checkout-action-btn {
-            background: var(--accent-color);
-            color: #ffffff;
-            border: none;
-            border-radius: 16px;
-            padding: 16px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            width: 100%;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(230, 126, 34, 0.25);
+            background: var(--accent-color); color: #ffffff; border: none; border-radius: 16px; padding: 16px;
+            font-size: 1.1rem; font-weight: bold; width: 100%; cursor: pointer; box-shadow: 0 4px 15px rgba(211, 84, 0, 0.2);
         }
 
         .category-section { animation: fadeInSection 0.4s ease-in-out; }
@@ -459,7 +384,6 @@
 
         const sheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTN2hMpYgfUE_IZQkKuGFlgLbbxHgCNblTSdqSDD8_wxzORisUVLVI3_YdQ5OKMvDANSJ9jt3gU2uLR/pub?output=csv';
 
-        // دالة تفكيك السطور الذكية حتى لو بداخلها فواصل أو كلمات عربية عشوائية
         function parseCSVLine(text) {
             let p = '', r = [];
             let q = false;
@@ -473,11 +397,9 @@
             return r;
         }
 
-        // دالة ذكية لتنظيف وتجريد النصوص لاستخراج الأرقام فقط ومقاومة أي لخبطة كتابة بالشيت
         function cleanPrice(priceStr) {
             if(!priceStr) return "";
-            let cleaned = priceStr.replace(/[^\d.]/g, '').trim();
-            return cleaned;
+            return priceStr.replace(/[^\d.]/g, '').trim();
         }
 
         async function fetchMenuData() {
@@ -497,17 +419,17 @@
                     const itemName = row[1] ? row[1].trim() : '';
                     const description = row[2] ? row[2].trim() : '';
                     
-                    // استخراج وتنظيف الأسعار بشكل آمن تماماً يضمن ظهور الأزرار
-                    const priceSmall = cleanPrice(row[3]);
-                    const priceMedium = cleanPrice(row[4]);
-                    const priceLarge = cleanPrice(row[5]);
+                    // استخراج وتنظيف كامل للخلايا لضمان استخراج السعر أياً كان مكانه
+                    const price1 = cleanPrice(row[3]);
+                    const price2 = cleanPrice(row[4]);
+                    const price3 = cleanPrice(row[5]);
 
                     if (!categories[category]) categories[category] = [];
 
                     categories[category].push({
                         name: itemName,
                         desc: description,
-                        prices: { small: priceSmall, medium: priceMedium, large: priceLarge }
+                        prices: { p1: price1, p2: price2, p3: price3 }
                     });
                 }
 
@@ -541,39 +463,40 @@
                     
                     let actionsHTML = '';
                     
-                    // بناء الأزرار بمرونة كاملة بعد التنظيف والتأكد من إظهارها بجانب كل حجم أو صنف فرعي
-                    if (item.prices.small && item.prices.small !== "") {
+                    // هندسة ذكية: لو لقى أسعار متعددة بيبنيها، لو لقى سعر واحد رئيسي بيبني زرار مباشر في نفس السطر
+                    if (item.prices.p1 && item.prices.p2 && item.prices.p2 !== "") {
                         actionsHTML += `
                             <div class="price-row">
                                 <span class="size-text">صغير:</span> 
-                                <span class="price-text">${item.prices.small} ج</span>
-                                <button class="ios-order-btn" onclick="addItemToCart('${item.name} (صغير)', ${item.prices.small})">طلب</button>
+                                <span class="price-text">${item.prices.p1} ج</span>
+                                <button class="ios-order-btn" onclick="addItemToCart('${item.name} (صغير)', ${item.prices.p1})">طلب</button>
                             </div>`;
-                    }
-                    if (item.prices.medium && item.prices.medium !== "") {
-                        actionsHTML += `
-                            <div class="price-row">
-                                <span class="size-text">وسط:</span> 
-                                <span class="price-text">${item.prices.medium} ج</span>
-                                <button class="ios-order-btn" onclick="addItemToCart('${item.name} (وسط)', ${item.prices.medium})">طلب</button>
-                            </div>`;
-                    }
-                    if (item.prices.large && item.prices.large !== "") {
-                        actionsHTML += `
-                            <div class="price-row">
-                                <span class="size-text">كبير:</span> 
-                                <span class="price-text">${item.prices.large} ج</span>
-                                <button class="ios-order-btn" onclick="addItemToCart('${item.name} (كبير)', ${item.prices.large})">طلب</button>
-                            </div>`;
-                    }
-
-                    // دعم وحماية إضافية لو السعر نازل في أول عمود بس بدون أحجام
-                    if(actionsHTML === '' && item.prices.small !== "") {
-                         actionsHTML += `
-                            <div class="price-row">
-                                <span class="price-text">${item.prices.small} ج</span>
-                                <button class="ios-order-btn" onclick="addItemToCart('${item.name}', ${item.prices.small})">طلب</button>
-                            </div>`;
+                        if (item.prices.p2) {
+                            actionsHTML += `
+                                <div class="price-row">
+                                    <span class="size-text">وسط:</span> 
+                                    <span class="price-text">${item.prices.p2} ج</span>
+                                    <button class="ios-order-btn" onclick="addItemToCart('${item.name} (وسط)', ${item.prices.p2})">طلب</button>
+                                </div>`;
+                        }
+                        if (item.prices.p3) {
+                            actionsHTML += `
+                                <div class="price-row">
+                                    <span class="size-text">كبير:</span> 
+                                    <span class="price-text">${item.prices.p3} ج</span>
+                                    <button class="ios-order-btn" onclick="addItemToCart('${item.name} (كبير)', ${item.prices.p3})">طلب</button>
+                                </div>`;
+                        }
+                    } else {
+                        // الحل النهائي والأقوى: صنف بسعر مباشر فريد بدون أحجام (زي الطواجن في الشيت عندك)
+                        let finalPrice = item.prices.p1 || item.prices.p2 || item.prices.p3;
+                        if(finalPrice) {
+                            actionsHTML += `
+                                <div class="price-row">
+                                    <span class="price-text">${finalPrice} ج</span>
+                                    <button class="ios-order-btn" onclick="addItemToCart('${item.name}', ${finalPrice})">طلب</button>
+                                </div>`;
+                        }
                     }
 
                     card.innerHTML = `
@@ -607,7 +530,6 @@
                 cart.push({ name, price: parsedPrice, qty: 1 });
             }
             
-            // تشغيل حركة النبضة المبهجة فورا على أيقونة السلة فوق
             const cartIcon = document.getElementById('cart-trigger-btn');
             cartIcon.classList.remove('pulse-animation');
             void cartIcon.offsetWidth; 
