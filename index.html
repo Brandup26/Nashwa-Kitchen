@@ -10,7 +10,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="مطبخ نشوى">
-    <link class="brand-logo-img" rel="apple-touch-icon" href="images/loogoo.jpg">
+    <link rel="apple-touch-icon" href="images/loogoo.jpg">
     
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -117,18 +117,26 @@
         .addr-tag { color: var(--address-tag); font-weight: 800; font-size: 0.85rem; display: flex; align-items: center; gap: 4px; }
         .brand-addr { font-size: 0.8rem; color: var(--main-text); font-weight: 600; }
 
-        /* القائمة */
+        /* --- شريط الأقسام (توسيع المسافات وحل التداخل) --- */
         .category-nav {
-            display: flex; overflow-x: auto; white-space: nowrap; padding: 15px 10px; gap: 15px;
+            display: flex; overflow-x: auto; white-space: nowrap; padding: 15px 20px; gap: 25px;
             scrollbar-width: none; background: var(--glass); backdrop-filter: blur(20px);
             position: sticky; top: 190px; z-index: 999; border-bottom: 0.5px solid rgba(0,0,0,0.1);
+            -webkit-overflow-scrolling: touch;
         }
-        .cat-item { display: flex; flex-direction: column; align-items: center; min-width: 80px; }
-        .cat-img-box { width: 55px; height: 55px; border-radius: 16px; background: #e5e5ea; overflow: hidden; border: 2.5px solid transparent; transition: 0.3s; }
+        .category-nav::-webkit-scrollbar { display: none; }
+        
+        .cat-item { 
+            display: flex; flex-direction: column; align-items: center; 
+            width: auto; min-width: 90px; cursor: pointer; flex-shrink: 0;
+        }
+        .cat-img-box { width: 58px; height: 58px; border-radius: 16px; background: #e5e5ea; overflow: hidden; border: 2.5px solid transparent; transition: 0.3s; }
         .cat-img-box img { width: 100%; height: 100%; object-fit: cover; }
         .cat-item.active .cat-img-box { border-color: var(--accent); transform: scale(1.05); }
-        .cat-item span { font-size: 0.75rem; font-weight: 700; color: var(--desc-text); margin-top: 5px; }
+        .cat-item span { font-size: 0.85rem; font-weight: 700; color: var(--desc-text); margin-top: 6px; white-space: nowrap; text-align: center; }
+        .cat-item.active span { color: var(--accent); font-weight: 800; }
 
+        /* قائمة الطعام */
         .menu-list { padding: 15px; max-width: 600px; margin: auto; }
         .food-card {
             background: var(--white); border-radius: 22px; margin-bottom: 12px; display: flex;
@@ -200,7 +208,7 @@
         <div class="loader-content">
             <img src="./images/loogoo.jpg" class="loader-logo-big">
             <h2 class="loader-text">مطبخ نشوى</h2>
-            <p class="loader-slogan">طعم ياخدك في حته تانيه ✨</p>
+            <p class="loader-slogan">أكل بيتي على أصوله ✨</p>
             <div class="loading-bar"><span></span></div>
         </div>
     </div>
@@ -280,7 +288,6 @@
             });
         }
 
-        // دالة مخصصة لتحليل أسطر الـ CSV بدقة لتجنب تداخل الأقسام بسبب الفواصل والنصوص
         function parseCSVLine(text) {
             let p = '', r = [];
             let q = false;
@@ -305,10 +312,12 @@
                 for(let i = 1; i < lines.length; i++) {
                     if(!lines[i].trim()) continue;
                     const col = parseCSVLine(lines[i]);
-                    let categoryName = col[0]?.replace(/^"|"$/g, '').trim();
-                    let itemName = col[1]?.replace(/^"|"$/g, '').trim();
-                    let itemPrice = col[2]?.replace(/^"|"$/g, '').trim();
-                    let itemDesc = col[3]?.replace(/^"|"$/g, '').trim() || "";
+                    
+                    // تنظيف كامل للنصوص من علامات التنصيص والمحارف الزائدة الناتجة من جوجل شيتس
+                    let categoryName = col[0]?.replace(/^["']|["']$/g, '').trim();
+                    let itemName = col[1]?.replace(/^["']|["']$/g, '').trim();
+                    let itemPrice = col[2]?.replace(/^["']|["']$/g, '').trim();
+                    let itemDesc = col[3]?.replace(/^["']|["']$/g, '').trim() || "";
                     
                     if(itemName) {
                         menuData.push({
@@ -371,7 +380,7 @@
 
             const fly = document.createElement('div');
             fly.className = 'fly-item';
-            fly.innerHTML = '🍔';
+            fly.innerHTML = '🍳';
             fly.style.left = e.clientX + 'px';
             fly.style.top = e.clientY + 'px';
             document.body.appendChild(fly);
