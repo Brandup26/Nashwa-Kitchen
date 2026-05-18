@@ -44,7 +44,7 @@
             justify-content: center;
             align-items: center;
             z-index: 9999;
-            transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.6s;
+            transition: opacity 0.6s ease, visibility 0.6s;
         }
 
         .splash-content {
@@ -88,7 +88,7 @@
 
         @keyframes advancedLoad { to { width: 100%; } }
 
-        /* --- الشاشة الرئيسية للمنيو --- */
+        /* --- الشاشة الرئيسية --- */
         #main-content {
             padding: 20px;
             max-width: 600px;
@@ -108,7 +108,7 @@
             font-weight: 800;
         }
 
-        /* سلة المشتريات العلوية */
+        /* سلة المشتريات العلوية العائمة مع أنيميشن النبضة */
         .cart-icon-container {
             position: fixed;
             top: 20px;
@@ -143,6 +143,16 @@
             align-items: center;
         }
 
+        /* أنيميشن النبضة الإشعاري عند إضافة طلب للمنيو */
+        .pulse-animation {
+            animation: iconPulse 0.4s ease-out;
+        }
+        @keyframes iconPulse {
+            0% { transform: scale(1); box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+            50% { transform: scale(1.25); background: var(--ios-blue); }
+            100% { transform: scale(1); box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        }
+
         /* شريط الأقسام */
         .categories-nav {
             display: flex;
@@ -171,7 +181,7 @@
             border-color: var(--text-color);
         }
 
-        /* كروت الأصناف المحسنة */
+        /* كروت الأصناف الاحترافية */
         .menu-card {
             background: var(--card-bg);
             border: 1px solid var(--glass-border);
@@ -185,15 +195,15 @@
             gap: 15px;
         }
 
-        .item-details { flex: 1; }
-        .item-details h3 { font-size: 1.1rem; margin-bottom: 4px; color: #fff; text-align: right;}
-        .item-details p { color: var(--text-muted); font-size: 0.85rem; line-height: 1.4; text-align: right;}
+        .item-details { flex: 1; text-align: right; }
+        .item-details h3 { font-size: 1.1rem; margin-bottom: 4px; color: #fff; }
+        .item-details p { color: var(--text-muted); font-size: 0.85rem; line-height: 1.4; }
 
         .item-actions-wrapper {
             display: flex;
             flex-direction: column;
             gap: 8px;
-            min-width: 120px;
+            min-width: 140px;
         }
 
         .price-row {
@@ -202,47 +212,31 @@
             align-items: center;
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255,255,255,0.04);
-            padding: 4px 6px;
-            border-radius: 10px;
-            gap: 6px;
+            padding: 6px 10px;
+            border-radius: 12px;
+            gap: 8px;
         }
 
-        .size-text {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            white-space: nowrap;
-        }
+        .size-text { font-size: 0.8rem; color: var(--text-muted); white-space: nowrap; }
+        .price-text { font-size: 0.9rem; color: var(--accent-color); font-weight: 600; white-space: nowrap; }
 
-        .price-text {
-            font-size: 0.85rem;
-            color: var(--accent-color);
-            font-weight: 600;
-            white-space: nowrap;
-        }
-
-        /* زر طلب إنسيابي شبه الأيفون */
+        /* زر طلب إنسيابي مع أنيميشن النبضة الفورية */
         .ios-order-btn {
             background: var(--ios-blue);
             color: #ffffff;
             border: none;
-            padding: 4px 8px;
-            border-radius: 8px;
-            font-size: 0.75rem;
+            padding: 6px 14px;
+            border-radius: 10px;
+            font-size: 0.8rem;
             font-weight: 600;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 2px;
-            white-space: nowrap;
             transition: transform 0.1s ease;
         }
         .ios-order-btn:active {
-            transform: scale(0.9) !important;
-            background-color: #0062cc;
+            transform: scale(0.88);
         }
 
-        /* --- شاشة السلة المنفصلة بالكامل --- */
+        /* --- شاشة السلة المنفصلة بالكامل (Slide Over) --- */
         #cart-page {
             position: fixed;
             top: 0;
@@ -255,6 +249,12 @@
             overflow-y: auto;
             display: flex;
             flex-direction: column;
+            transform: translateX(-100%);
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        
+        #cart-page.active {
+            transform: translateX(0);
         }
         
         .cart-page-container {
@@ -301,7 +301,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            animation: cartItemSlide 0.3s ease-out;
         }
+        @keyframes cartItemSlide { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
 
         .cart-item-name { font-size: 1rem; font-weight: 600; margin-bottom: 4px; text-align: right; }
         .cart-item-price { color: var(--accent-color); font-size: 0.9rem; font-weight: bold; text-align: right; }
@@ -334,6 +336,7 @@
             margin-bottom: 30px;
         }
 
+        /* فورم المعلومات الثلاثية المطلوبة فقط */
         .customer-inputs-group {
             display: flex;
             flex-direction: column;
@@ -353,6 +356,7 @@
             text-align: right;
             outline: none;
         }
+        .customer-inputs-group input:focus { border-color: var(--accent-color); }
 
         .ios-checkout-action-btn {
             background: linear-gradient(90deg, var(--accent-color), #ffa500);
@@ -397,7 +401,7 @@
         <section class="menu-section" id="menu-container"></section>
     </main>
 
-    <div id="cart-page" class="hidden">
+    <div id="cart-page">
         <div class="cart-page-container">
             <div class="cart-page-header">
                 <button class="back-to-menu-btn" onclick="openCartPage(false)">
@@ -414,14 +418,14 @@
             </div>
 
             <div class="customer-inputs-group">
-                <label for="user-name">اسم الزبون</label>
-                <input type="text" id="user-name" placeholder="اكتب اسمك الثنائي">
+                <label for="user-name">الاسم</label>
+                <input type="text" id="user-name" placeholder="اكتب الاسم بالكامل">
                 
                 <label for="user-phone">رقم الهاتف</label>
-                <input type="tel" id="user-phone" placeholder="رقم الموبايل الخاص بك">
+                <input type="tel" id="user-phone" placeholder="رقم الموبايل">
                 
-                <label for="user-address">العنوان بالكامل</label>
-                <input type="text" id="user-address" placeholder="المنطقة، الشارع، رقم الشقة أو البيت">
+                <label for="user-address">العنوان</label>
+                <input type="text" id="user-address" placeholder="المنطقة، الشارع، رقم البيت">
             </div>
 
             <button class="ios-checkout-action-btn" onclick="sendOrderViaWhatsApp()">تأكيد وإرسال الطلب</button>
@@ -432,12 +436,9 @@
         let cart = [];
 
         window.addEventListener('DOMContentLoaded', () => {
-            // كود إضافي للتأكد من امتداد الصورة لو مرفوعة jpg بدل png
             const imgEl = document.getElementById('splash-logo');
             imgEl.onerror = function() {
-                if(!this.src.endsWith('jpg')) {
-                    this.src = './loogoo.jpg';
-                }
+                if(!this.src.endsWith('jpg')) { this.src = './loogoo.jpg'; }
             };
 
             setTimeout(() => {
@@ -453,7 +454,7 @@
 
         const sheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTN2hMpYgfUE_IZQkKuGFlgLbbxHgCNblTSdqSDD8_wxzORisUVLVI3_YdQ5OKMvDANSJ9jt3gU2uLR/pub?output=csv';
 
-        // دالة ذكية تفك سطور الـ CSV حتى لو تحتوي على فواصل بداخل الوصف
+        // دالة قراءة ومعالجة أسطر الشيت بشكل سليم ومقاوم لأي فواصل داخل النصوص
         function parseCSVLine(text) {
             let p = '', r = [];
             let q = false;
@@ -471,12 +472,9 @@
             try {
                 const response = await fetch(sheetURL);
                 const data = await response.text();
-                
-                // تقسيم السطور بناءً على نهاية السطر وتجنب المشاكل
                 const lines = data.split(/\r?\n/);
                 const categories = {};
 
-                // تخطي العناوين والبدء من السطر الثاني
                 for (let i = 1; i < lines.length; i++) {
                     if (!lines[i].trim()) continue;
                     
@@ -512,9 +510,7 @@
             categoriesContainer.innerHTML = '';
             menuContainer.innerHTML = '';
 
-            const categoryKeys = Object.keys(categories);
-
-            categoryKeys.forEach((category, index) => {
+            Object.keys(categories).forEach((category, index) => {
                 const catButton = document.createElement('button');
                 catButton.className = `category-btn ${index === 0 ? 'active' : ''}`;
                 catButton.innerText = category;
@@ -531,8 +527,8 @@
                     
                     let actionsHTML = '';
                     
-                    // توليد الأزرار والأسعار بشكل سليم ومقاوم للأخطاء
-                    if (item.prices.small && item.prices.small.trim() !== "") {
+                    // توليد الأزرار والأسعار بشكل سليم ومحاذاة كاملة
+                    if (item.prices.small && item.prices.small.trim() !== "" && !isNaN(item.prices.small)) {
                         actionsHTML += `
                             <div class="price-row">
                                 <span class="size-text">صغير:</span> 
@@ -540,7 +536,7 @@
                                 <button class="ios-order-btn" onclick="addItemToCart('${item.name} (صغير)', ${item.prices.small})">طلب</button>
                             </div>`;
                     }
-                    if (item.prices.medium && item.prices.medium.trim() !== "") {
+                    if (item.prices.medium && item.prices.medium.trim() !== "" && !isNaN(item.prices.medium)) {
                         actionsHTML += `
                             <div class="price-row">
                                 <span class="size-text">وسط:</span> 
@@ -548,12 +544,21 @@
                                 <button class="ios-order-btn" onclick="addItemToCart('${item.name} (وسط)', ${item.prices.medium})">طلب</button>
                             </div>`;
                     }
-                    if (item.prices.large && item.prices.large.trim() !== "") {
+                    if (item.prices.large && item.prices.large.trim() !== "" && !isNaN(item.prices.large)) {
                         actionsHTML += `
                             <div class="price-row">
                                 <span class="size-text">كبير:</span> 
                                 <span class="price-text">${item.prices.large} ج</span>
                                 <button class="ios-order-btn" onclick="addItemToCart('${item.name} (كبير)', ${item.prices.large})">طلب</button>
+                            </div>`;
+                    }
+
+                    // في حال كان السعر موضوع كعمود فردي بدون أحجام
+                    if(actionsHTML === '' && item.prices.small && !isNaN(item.prices.small)) {
+                         actionsHTML += `
+                            <div class="price-row">
+                                <span class="price-text">${item.prices.small} ج</span>
+                                <button class="ios-order-btn" onclick="addItemToCart('${item.name}', ${item.prices.small})">طلب</button>
                             </div>`;
                     }
 
@@ -587,6 +592,14 @@
             } else {
                 cart.push({ name, price: parsedPrice, qty: 1 });
             }
+            
+            // إطلاق أنيميشن النبضة على أيقونة السلة عند الإضافة
+            const cartIcon = document.getElementById('cart-trigger-btn');
+            cartIcon.classList.remove('pulse-animation');
+            void cartIcon.offsetWidth; // ريستارت للأنيميشن
+            cartIcon.add('pulse-animation');
+            setTimeout(() => cartIcon.classList.remove('pulse-animation'), 400);
+
             refreshCartDisplay();
         }
 
@@ -636,18 +649,11 @@
         }
 
         function openCartPage(show) {
-            const menuScreen = document.getElementById('main-content');
             const cartScreen = document.getElementById('cart-page');
-            const cartTrigger = document.getElementById('cart-trigger-btn');
-
             if (show) {
-                menuScreen.classList.add('hidden');
-                cartTrigger.classList.add('hidden');
-                cartScreen.classList.remove('hidden');
+                cartScreen.classList.add('active');
             } else {
-                cartScreen.classList.add('hidden');
-                menuScreen.classList.remove('hidden');
-                cartTrigger.classList.remove('hidden');
+                cartScreen.classList.remove('active');
             }
         }
 
@@ -661,7 +667,7 @@
                 return;
             }
             if (!name || !phone || !address) {
-                alert('برجاء ملء بياناتك كاملة (الاسم، الهاتف، العنوان) ليتم إرسال طلبك بنجاح.');
+                alert('برجاء ملء بياناتك كاملة (الاسم، الهاتف، العنوان) لإرسال الطلب عبر الواتساب.');
                 return;
             }
 
@@ -687,7 +693,7 @@
         window.addEventListener('popstate', () => {
             window.history.pushState(null, null, window.location.pathname);
             const cartScreen = document.getElementById('cart-page');
-            if (!cartScreen.classList.contains('hidden')) { openCartPage(false); }
+            if (cartScreen.classList.contains('active')) { openCartPage(false); }
         });
         window.history.pushState(null, null, window.location.pathname);
     </script>
