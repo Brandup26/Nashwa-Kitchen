@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مطعم فاخر - المنيو الرقمي</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #0b0b0f;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --accent-color: #ffb830; /* لون ذهبي/برتقالي فاخر */
+            --text-color: #ffffff;
+            --text-muted: #a0a0a5;
+            --glass-border: rgba(255, 255, 255, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+
+        /* --- شاشة التحميل الفخمة والمريحة للعين --- */
+        #splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: #08080c;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.8s;
+        }
+
+        .splash-content {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* أنيميشن اللوجو المبتكر والمريح للعين */
+        #splash-logo {
+            width: 160px;
+            height: auto;
+            margin-bottom: 35px;
+            opacity: 0;
+            transform: scale(0.8) translateY(15px);
+            filter: drop-shadow(0 0 0px rgba(255, 184, 48, 0));
+            animation: luxuryIntro 2.5s forwards cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .progress-bar-container {
+            width: 180px;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeInProgressBar 1s 0.5s forwards ease-in-out;
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+            box-shadow: 0 0 15px var(--accent-color);
+            animation: advancedLoad 2.3s forwards cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes luxuryIntro {
+            0% {
+                opacity: 0;
+                transform: scale(0.8) translateY(15px);
+                filter: drop-shadow(0 0 0px rgba(255, 184, 48, 0));
+            }
+            30% {
+                opacity: 1;
+                transform: scale(1.02) translateY(0);
+                filter: drop-shadow(0 0 10px rgba(255, 184, 48, 0.2));
+            }
+            70% {
+                transform: scale(1) translateY(0);
+                filter: drop-shadow(0 0 20px rgba(255, 184, 48, 0.35));
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1.02) translateY(0);
+                filter: drop-shadow(0 0 12px rgba(255, 184, 48, 0.15));
+            }
+        }
+
+        @keyframes fadeInProgressBar {
+            to { opacity: 1; }
+        }
+
+        @keyframes advancedLoad {
+            0% { width: 0%; }
+            40% { width: 60%; }
+            100% { width: 100%; }
+        }
+
+        /* --- المحتوى الرئيسي والـ Glassmorphism --- */
+        #main-content {
+            opacity: 1;
+            transition: opacity 0.5s ease-in;
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        header {
+            text-align: center;
+            margin: 40px 0 20px 0;
+        }
+
+        .restaurant-name {
+            font-size: 2.2rem;
+            color: var(--accent-color);
+            font-weight: 800;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        /* شريط الأقسام السريعة للموبايل */
+        .categories-nav {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding: 10px 5px;
+            margin-bottom: 25px;
+            scrollbar-width: none;
+        }
+        .categories-nav::-webkit-scrollbar {
+            display: none;
+        }
+
+        .category-btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            color: var(--text-muted);
+            padding: 8px 18px;
+            border-radius: 30px;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .category-btn.active, .category-btn:active {
+            background: var(--accent-color);
+            color: #000;
+            font-weight: bold;
+            box-shadow: 0 0 15px rgba(255, 184, 48, 0.4);
+            border-color: var(--accent-color);
+        }
+
+        /* الأقسام وكروت المنيو */
+        .category-section {
+            animation: fadeInSection 0.4s ease-in-out;
+        }
+        .hidden-section {
+            display: none !important;
+        }
+
+        @keyframes fadeInSection {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .menu-card {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.3s ease;
+        }
+
+        .menu-card:active {
+            transform: scale(0.98);
+        }
+
+        .item-details h3 {
+            font-size: 1.1rem;
+            margin-bottom: 6px;
+        }
+
+        .item-details p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* صندوق الأسعار المنظم */
+        .item-prices-box {
+            text-align: left;
+            font-size: 0.85rem;
+            color: var(--accent-color);
+            line-height: 1.4;
+            border-right: 1px solid var(--glass-border);
+            padding-right: 12px;
+        }
+
+        .size-label {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            margin-left: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- شاشة التحميل الاحترافية (Splash Screen) -->
+    <div id="splash-screen">
+        <div class="splash-content">
+            <img src="loogoo.jpg" alt="لوجو المطعم" id="splash-logo">
+            <div class="progress-bar-container">
+                <div class="progress-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- محتوى الموقع الرئيسي -->
+    <main id="main-content" class="hidden">
+        <header>
+            <h1 class="restaurant-name">اسم المطعم</h1>
+            <p class="subtitle">استمتع بأشهى المأكولات</p>
+        </header>
+
+        <nav class="categories-nav" id="categories-container"></nav>
+
+        <section class="menu-section" id="menu-container"></section>
+    </main>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                const splash = document.getElementById('splash-screen');
+                const mainContent = document.getElementById('main-content');
+                
+                splash.style.opacity = '0';
+                splash.style.visibility = 'hidden';
+                mainContent.classList.remove('hidden');
+            }, 2500);
+
+            fetchMenuData();
+        });
+
+        // رابط الشيت بصيغة CSV الخاص بك
+        const sheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTN2hMpYgfUE_IZQkKuGFlgLbbxHgCNblTSdqSDD8_wxzORisUVLVI3_YdQ5OKMvDANSJ9jt3gU2uLR/pub?output=csv';
+
+        async function fetchMenuData() {
+            try {
+                const response = await fetch(sheetURL);
+                const data = await response.text();
+                
+                // تحويل الـ CSV إلى مصفوفة أسطر
+                const rows = data.split('\n').map(row => row.split(','));
+                const menuItems = rows.slice(1);
+
+                const categories = {};
+
+                menuItems.forEach(row => {
+                    if (row.length < 2 || !row[0]) return;
+                    
+                    const category = row[0].trim();
+                    const itemName = row[1]?.trim() || '';
+                    const description = row[2]?.trim() || '';
+                    const priceSmall = row[3]?.trim() || '';
+                    const priceMedium = row[4]?.trim() || '';
+                    const priceLarge = row[5]?.trim() || '';
+
+                    if (!categories[category]) {
+                        categories[category] = [];
+                    }
+
+                    categories[category].push({
+                        name: itemName,
+                        desc: description,
+                        prices: { small: priceSmall, medium: priceMedium, large: priceLarge }
+                    });
+                });
+
+                renderMenu(categories);
+
+            } catch (error) {
+                console.error("خطأ في جلب بيانات المنيو:", error);
+            }
+        }
+
+        function renderMenu(categories) {
+            const categoriesContainer = document.getElementById('categories-container');
+            const menuContainer = document.getElementById('menu-container');
+            
+            categoriesContainer.innerHTML = '';
+            menuContainer.innerHTML = '';
+
+            Object.keys(categories).forEach((category, index) => {
+                const catButton = document.createElement('button');
+                catButton.className = `category-btn ${index === 0 ? 'active' : ''}`;
+                catButton.innerText = category;
+                catButton.onclick = () => filterCategory(category, catButton);
+                categoriesContainer.appendChild(catButton);
+
+                const section = document.createElement('div');
+                section.className = `category-section ${index === 0 ? '' : 'hidden-section'}`;
+                section.id = `section-${category}`;
+
+                categories[category].forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = 'menu-card';
+                    
+                    let pricesHTML = '';
+                    if (item.prices.small) pricesHTML += `<div><span class="size-label">صغير:</span> ${item.prices.small} ج.م</div>`;
+                    if (item.prices.medium) pricesHTML += `<div><span class="size-label">وسط:</span> ${item.prices.medium} ج.م</div>`;
+                    if (item.prices.large) pricesHTML += `<div><span class="size-label">كبير:</span> ${item.prices.large} ج.م</div>`;
+
+                    card.innerHTML = `
+                        <div class="item-details">
+                            <h3>${item.name}</h3>
+                            <p>${item.desc}</p>
+                        </div>
+                        <div class="item-prices-box">
+                            ${pricesHTML}
+                        </div>
+                    `;
+                    section.appendChild(card);
+                });
+
+                menuContainer.appendChild(section);
+            });
+        }
+
+        function filterCategory(category, button) {
+            document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+
+            document.querySelectorAll('.category-section').forEach(sec => {
+                sec.classList.add('hidden-section');
+            });
+            document.getElementById(`section-${category}`).classList.remove('hidden-section');
+        }
+
+        // ميزة التحكم بزر الرجوع للموبايل لمنع الخروج المفاجئ
+        window.addEventListener('popstate', (event) => {
+            window.history.pushState(null, null, window.location.pathname);
+            const firstBtn = document.querySelector('.category-btn');
+            if(firstBtn) firstBtn.click();
+        });
+        window.history.pushState(null, null, window.location.pathname);
+    </script>
+</body>
+</html>
