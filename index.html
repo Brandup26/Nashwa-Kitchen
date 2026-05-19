@@ -40,42 +40,62 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; -webkit-tap-highlight-color: transparent; transition: background 0.3s, color 0.3s; }
         body { background-color: var(--bg); color: var(--main-text); line-height: 1.6; overflow-x: hidden; }
 
-        /* --- شاشة الترحيب الاحترافية الجديدة (Cinematic Reveal) --- */
+        /* --- شاشة الترحيب الاحترافية بحركة اللوجو التفاعلية 👌 --- */
         #splash-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: var(--white); z-index: 9999;
             display: flex; justify-content: center; align-items: center;
             transition: transform 0.8s cubic-bezier(0.85, 0, 0.15, 1);
         }
-        .loader-content { text-align: center; }
+        .loader-content { text-align: center; position: relative; }
         
+        /* حاوية اللوجو لعمل تأثير حركة حركة الشيف 👌 */
+        .logo-wrapper {
+            position: relative; width: 155px; height: 155px; margin: 0 auto 25px auto;
+        }
         .loader-logo-big {
-            width: 150px; height: 150px; border-radius: 50%;
-            margin-bottom: 25px; object-fit: cover; 
-            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
-            opacity: 0; filter: blur(10px); transform: scale(0.8);
-            animation: cinematicLogo 1.6s cubic-bezier(0.25, 1, 0.5, 1) forwards 0.2s;
+            width: 100%; height: 100%; border-radius: 50%;
+            object-fit: cover; box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            opacity: 0; filter: blur(8px); transform: scale(0.8);
+            animation: cinematicLogo 1.4s cubic-bezier(0.25, 1, 0.5, 1) forwards 0.1s;
+        }
+        /* إشارة اليد التفاعلية المنبثقة من اللوجو */
+        .chef-hand-sign {
+            position: absolute; bottom: 5px; left: 5px; font-size: 2.2rem;
+            opacity: 0; transform: scale(0) rotate(20deg);
+            animation: chefSign 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards 1.3s;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
         }
         
         .loader-text, .loader-slogan, .loading-bar {
             opacity: 0; transform: translateY(20px);
         }
+        /* تكبير العنوان وتحسين انسيابيته وجماله */
         .loader-text { 
-            font-weight: 800; color: var(--accent); font-size: 2.3rem; margin-bottom: 6px; 
-            animation: cinematicText 1s cubic-bezier(0.25, 1, 0.5, 1) forwards 0.8s;
+            font-weight: 800; color: var(--accent); font-size: 2.6rem; margin-bottom: 4px; 
+            letter-spacing: -0.5px; text-shadow: 0 2px 10px rgba(211, 84, 0, 0.1);
+            animation: cinematicText 1s cubic-bezier(0.25, 1, 0.5, 1) forwards 0.7s;
         }
         .loader-slogan { 
-            font-size: 1.1rem; color: var(--desc-text); font-weight: 600; 
-            animation: cinematicText 1s cubic-bezier(0.25, 1, 0.5, 1) forwards 1s;
+            font-size: 1.2rem; color: var(--desc-text); font-weight: 700; 
+            animation: cinematicText 1s cubic-bezier(0.25, 1, 0.5, 1) forwards 0.9s;
         }
         .loading-bar { 
-            width: 140px; height: 3px; background: rgba(0,0,0,0.05); margin: 30px auto 0 auto; border-radius: 10px; overflow: hidden;
-            animation: cinematicText 1s cubic-bezier(0.25, 1, 0.5, 1) forwards 1.2s;
+            width: 150px; height: 3.5px; background: rgba(0,0,0,0.05); margin: 30px auto 0 auto; border-radius: 10px; overflow: hidden;
+            animation: cinematicText 1s cubic-bezier(0.25, 1, 0.5, 1) forwards 1.1s;
         }
-        .loading-bar span { display: block; width: 0; height: 100%; background: var(--accent); animation: progress 1.8s cubic-bezier(0.4, 0, 0.2, 1) forwards 1.2s; }
+        .loading-bar span { display: block; width: 0; height: 100%; background: var(--accent); animation: progress 2s cubic-bezier(0.4, 0, 0.2, 1) forwards 1.1s; }
         
+        /* أنيميشن ظهور اللوجو واليد 👌 */
         @keyframes cinematicLogo {
             to { opacity: 1; filter: blur(0); transform: scale(1); box-shadow: 0 25px 50px rgba(211, 84, 0, 0.18); }
+        }
+        @keyframes chefSign {
+            0% { opacity: 0; transform: scale(0) rotate(20deg); }
+            40% { opacity: 1; transform: scale(1.2) rotate(-10deg); }
+            60% { transform: scale(0.95) rotate(5deg); }
+            80% { transform: scale(1.1) rotate(0deg); }
+            100% { opacity: 1; transform: scale(1) rotate(0deg); }
         }
         @keyframes cinematicText {
             to { opacity: 1; transform: translateY(0); }
@@ -83,12 +103,12 @@
         @keyframes progress { to { width: 100%; } }
         .splash-hidden { transform: translateY(-100%); pointer-events: none; }
 
-        /* --- الهيدر --- */
+        /* --- الهيدر وعنوان المطعم العلوي المطور --- */
         header { 
             background: var(--header-bg); position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 15px rgba(0,0,0,0.06);
             display: flex; flex-direction: column; align-items: center; padding: 15px 0;
         }
-        .header-top { width: 100%; display: flex; align-items: center; justify-content: center; position: relative; margin-bottom: 10px; }
+        .header-top { width: 100%; display: flex; align-items: center; justify-content: center; position: relative; margin-bottom: 12px; }
         .header-logo-container { width: 115px; height: 115px; border-radius: 50%; background: white; padding: 4px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); overflow: hidden; }
         .header-logo { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
         .theme-toggle { position: absolute; right: 20px; top: 0; width: 45px; height: 45px; background: var(--bg); border-radius: 14px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1.2rem; border: none; color: var(--main-text); }
@@ -99,9 +119,13 @@
         .badge { position: absolute; top: -5px; right: -5px; background: #ff3b30; color: white; font-size: 10px; font-weight: 800; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid white; transform: scale(0); transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .badge.show { transform: scale(1); }
         
-        .header-bottom-addr { text-align: center; width: 100%; padding: 8px 15px; border-top: 0.5px solid rgba(0,0,0,0.05); display: flex; align-items: center; justify-content: center; gap: 6px; }
-        .addr-tag { color: var(--address-tag); font-weight: 800; font-size: 0.85rem; display: flex; align-items: center; gap: 4px; }
-        .brand-addr { font-size: 0.8rem; color: var(--main-text); font-weight: 600; line-height: 1.4; }
+        /* تجميل خط وتنسيق العنوان وتكبيره بشكل انسيابي */
+        .header-bottom-addr { 
+            text-align: center; width: 100%; padding: 10px 20px; border-top: 0.5px solid rgba(0,0,0,0.05); 
+            display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; 
+        }
+        .addr-tag { color: var(--address-tag); font-weight: 800; font-size: 0.95rem; display: flex; align-items: center; gap: 4px; }
+        .brand-addr { font-size: 0.92rem; color: var(--main-text); font-weight: 700; line-height: 1.5; max-width: 90%; text-align: center; }
 
         /* شريط الأقسام */
         .category-nav { display: flex; overflow-x: auto; white-space: nowrap; padding: 15px 20px; gap: 28px; scrollbar-width: none; background: var(--glass); backdrop-filter: blur(20px); position: sticky; top: 190px; z-index: 999; border-bottom: 0.5px solid rgba(0,0,0,0.1); -webkit-overflow-scrolling: touch; }
@@ -132,7 +156,7 @@
         }
         .added-notice.show { opacity: 1; transform: translateY(0); }
 
-        /* --- تصميم نافذة التأكيد الإجبارية الجديدة للـ 24 ساعة --- */
+        /* نافذة التأكيد الإجبارية */
         .confirm-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(8px);
@@ -197,7 +221,10 @@
 
     <div id="splash-screen">
         <div class="loader-content">
-            <img src="./images/loogoo.jpg" class="loader-logo-big">
+            <div class="logo-wrapper">
+                <img src="./images/loogoo.jpg" class="loader-logo-big">
+                <span class="chef-hand-sign">👌</span>
+            </div>
             <h2 class="loader-text">مطبخ نشوي</h2>
             <p class="loader-slogan">الأكل البيتي علي أصوله 🍳✨</p>
             <div class="loading-bar"><span></span></div>
@@ -228,7 +255,7 @@
 
     <footer class="restaurant-footer">
         <div class="footer-phones">
-            <span style="font-weight: 800; font-size: 0.9rem;">📞 أرقام المطعم لاستقبال الطلبات:</span>
+            <span style="font-weight: 800; font-size: 0.95rem;">📞 رقم استقبال الطلبات:</span>
             <a href="tel:01032654884">01032654884</a>
         </div>
         <p class="footer-rights">جميع الحقوق محفوظة لـ مطبخ نشوي 2026 ©</p>
@@ -260,7 +287,7 @@
         const IMAGES_PATH = "./images/"; 
         let menuData = [], cart = [];
         let currentTotal = 0; 
-        let pendingItem = null; // لحفظ بيانات العنصر قبل الموافقة
+        let pendingItem = null;
 
         function toggleTheme() {
             document.body.classList.toggle('dark-mode');
@@ -306,7 +333,7 @@
                 setTimeout(() => {
                     document.getElementById('splash-screen').classList.add('splash-hidden');
                     if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js').catch(err => console.log(err)); }
-                }, 2800);
+                }, 3200); // زيادة وقت العرض قليلاً لتكتمل حركة اليد بالكامل بشكل رائع
             } catch (e) { document.getElementById('splash-screen').classList.add('splash-hidden'); }
         }
 
@@ -339,14 +366,12 @@
             `).join('');
         }
 
-        // دالة تفعيل تدفق إضافة الصنف وفتح المودال الإجباري
         function triggerAddFlow(e, btn, name, price, img) {
             pendingItem = { clickEvent: { clientX: e.clientX, clientY: e.clientY }, button: btn, name, price, img };
             const overlay = document.getElementById('customConfirm');
             overlay.classList.add('open');
         }
 
-        // التعامل مع أزرار المودال الإجباري
         document.getElementById('confirmYesBtn').addEventListener('click', () => {
             if (pendingItem) {
                 executeAddToCart(pendingItem.clickEvent, pendingItem.button, pendingItem.name, pendingItem.price, pendingItem.img);
@@ -364,7 +389,6 @@
             pendingItem = null;
         }
 
-        // تنفيذ الإضافة الفعلية بعد موافقة العميل الإجبارية
         function executeAddToCart(e, btn, name, price, img) {
             cart.push({name, price, img});
             const notice = btn.previousElementSibling;
