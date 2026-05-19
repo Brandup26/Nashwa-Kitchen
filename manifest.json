@@ -1,0 +1,22 @@
+{
+  "name": "مطبخ نشوي للأكل البيتي",
+  "short_name": "مطبخ نشوي",
+  "description": "المنيو الرسمي لمطبخ نشوي - الأكل البيتي على أصوله",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#f2f2f7",
+  "theme_color": "#d35400",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "images/loogoo.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "images/loogoo.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+  ]
+}
