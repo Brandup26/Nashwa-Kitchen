@@ -10,31 +10,31 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="مطبخ نشوي">
-    <link rel="apple-touch-icon" href="images/loogoo.jpg">
+    <link class="brand-logo-img" rel="apple-touch-icon" href="images/loogoo.png">
     
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #e0e0e5; 
-            --main-text: #1c1c1e;
-            --desc-text: #636366;
-            --accent: #d35400;
-            --address-tag: #0a84ff;
-            --white: #f2f2f7; 
-            --glass: rgba(242, 242, 247, 0.8);
-            --success: #34c759;
-            --header-bg: #f2f2f7;
-            --blur-bg: rgba(255, 255, 255, 0.6);
+          --bg: #e0e0e5; 
+          --main-text: #1c1c1e;
+          --desc-text: #636366;
+          --accent: #d35400;
+          --address-tag: #0a84ff;
+          --white: #f2f2f7; 
+          --glass: rgba(242, 242, 247, 0.85);
+          --success: #34c759;
+          --header-bg: #f2f2f7;
+          --blur-bg: rgba(255, 255, 255, 0.6);
         }
 
         body.dark-mode {
-            --bg: #121212;
-            --main-text: #f2f2f7;
-            --desc-text: #aeaeb2;
-            --white: #1c1c1e;
-            --glass: rgba(28, 28, 30, 0.8);
-            --header-bg: #1c1c1e;
-            --blur-bg: rgba(0, 0, 0, 0.6);
+          --bg: #121212;
+          --main-text: #f2f2f7;
+          --desc-text: #aeaeb2;
+          --white: #1c1c1e;
+          --glass: rgba(28, 28, 30, 0.85);
+          --header-bg: #1c1c1e;
+          --blur-bg: rgba(0, 0, 0, 0.6);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; -webkit-tap-highlight-color: transparent; transition: background 0.3s, color 0.3s; }
@@ -42,34 +42,29 @@
 
         /* --- شاشة الترحيب بحركة الشيف 👌 --- */
         #splash-screen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--white); z-index: 9999;
-            display: flex; justify-content: center; align-items: center;
-            transition: transform 0.8s cubic-bezier(0.85, 0, 0.15, 1);
+          position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+          background: var(--white); z-index: 9999;
+          display: flex; justify-content: center; align-items: center;
+          transition: transform 0.8s cubic-bezier(0.85, 0, 0.15, 1);
         }
         .loader-content { text-align: center; position: relative; }
-        
         .logo-wrapper { position: relative; width: 150px; height: 150px; margin: 0 auto 20px auto; }
         .loader-logo-big {
-            width: 100%; height: 100%; border-radius: 50%;
-            object-fit: cover; box-shadow: 0 10px 40px rgba(0,0,0,0.08);
-            opacity: 0; filter: blur(8px); transform: scale(0.8);
-            animation: cinematicLogo 1.4s cubic-bezier(0.25, 1, 0.5, 1) forwards 0.1s;
+          width: 100%; height: 100%; border-radius: 50%;
+          object-fit: cover; box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+          opacity: 0; filter: blur(8px); transform: scale(0.8);
+          animation: cinematicLogo 1.4s cubic-bezier(0.25, 1, 0.5, 1) forwards 0.1s;
         }
         .chef-hand-sign {
-            position: absolute; bottom: 5px; left: 5px; font-size: 2.2rem;
-            opacity: 0; transform: scale(0) rotate(20deg);
-            animation: chefSign 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards 1.3s;
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
+          position: absolute; bottom: 5px; left: 5px; font-size: 2.2rem;
+          opacity: 0; transform: scale(0) rotate(20deg);
+          animation: chefSign 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards 1.3s;
+          filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
         }
-        
         .loader-text, .loader-slogan, .loading-bar { opacity: 0; transform: translateY(20px); }
-        
-        /* تعديل حجم الخط ليصبح متوسطاً وانسيابياً ومريحاً للعين */
         .loader-text { 
-            font-weight: 800; color: var(--accent); font-size: 1.85rem; margin-bottom: 4px; 
-            letter-spacing: -0.5px;
-            animation: cinematicText 1s cubic-bezier(0.25, 1, 0.5, 1) forwards 0.7s;
+          font-weight: 800; color: var(--accent); font-size: 1.85rem; margin-bottom: 4px; 
+          letter-spacing: -0.5px; animation: cinematicText 1s cubic-bezier(0.25, 1, 0.5, 1) forwards 0.7s;
         }
         .loader-slogan { font-size: 1.05rem; color: var(--desc-text); font-weight: 700; animation: cinematicText 1s cubic-bezier(0.25, 1, 0.5, 1) forwards 0.9s; }
         .loading-bar { width: 140px; height: 3.5px; background: rgba(0,0,0,0.05); margin: 25px auto 0 auto; border-radius: 10px; overflow: hidden; animation: cinematicText 1s cubic-bezier(0.25, 1, 0.5, 1) forwards 1.1s; }
@@ -81,32 +76,59 @@
         @keyframes progress { to { width: 100%; } }
         .splash-hidden { transform: translateY(-100%); pointer-events: none; }
 
-        /* --- الهيدر --- */
-        header { background: var(--header-bg); position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 15px rgba(0,0,0,0.06); display: flex; flex-direction: column; align-items: center; padding: 15px 0; }
-        .header-top { width: 100%; display: flex; align-items: center; justify-content: center; position: relative; margin-bottom: 12px; }
-        .header-logo-container { width: 115px; height: 115px; border-radius: 50%; background: white; padding: 4px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); overflow: hidden; }
+        /* --- حاوية التثبيت الذكية للهيدر والأقسام معاً --- */
+        .sticky-wrapper {
+          position: sticky;
+          top: 0;
+          z-index: 1000;
+          background: var(--header-bg);
+          box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+        }
+
+        /* الهيدر العلوي */
+        header { 
+          display: flex; flex-direction: column; align-items: center; padding: 12px 0 6px 0;
+          transition: all 0.4s ease;
+        }
+        .header-top { width: 100%; display: flex; align-items: center; justify-content: center; position: relative; margin-bottom: 8px; }
+        .header-logo-container { width: 95px; height: 95px; border-radius: 50%; background: white; padding: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); overflow: hidden; transition: all 0.3s ease; }
         .header-logo { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
-        .theme-toggle { position: absolute; right: 20px; top: 0; width: 45px; height: 45px; background: var(--bg); border-radius: 14px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1.2rem; border: none; color: var(--main-text); }
-        .cart-trigger-container { position: absolute; left: 20px; top: 0; }
-        .cart-trigger { width: 45px; height: 45px; background: var(--bg); border-radius: 14px; display: flex; align-items: center; justify-content: center; position: relative; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        
+        /* أزرار الهيدر الجانبية أصبحت ثابتة هندسياً لتسهيل طلب الأوردر */
+        .theme-toggle { position: absolute; right: 20px; top: 10px; width: 42px; height: 42px; background: var(--white); border-radius: 14px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1.1rem; border: none; color: var(--main-text); box-shadow: 0 2px 8px rgba(0,0,0,0.05); z-index: 1001; }
+        .cart-trigger-container { position: absolute; left: 20px; top: 10px; z-index: 1001; }
+        .cart-trigger { width: 42px; height: 42px; background: var(--white); border-radius: 14px; display: flex; align-items: center; justify-content: center; position: relative; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
         .cart-trigger.shake { animation: cartShake 0.5s ease-in-out; }
         @keyframes cartShake { 0%, 100% { transform: scale(1) rotate(0deg); } 20%, 60% { transform: scale(1.15) rotate(-10deg); } 40%, 80% { transform: scale(1.15) rotate(10deg); } }
-        .badge { position: absolute; top: -5px; right: -5px; background: #ff3b30; color: white; font-size: 10px; font-weight: 800; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid white; transform: scale(0); transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .badge { position: absolute; top: -5px; right: -5px; background: #ff3b30; color: white; font-size: 10px; font-weight: 800; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid var(--white); transform: scale(0); transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .badge.show { transform: scale(1); }
         
-        .header-bottom-addr { text-align: center; width: 100%; padding: 10px 20px; border-top: 0.5px solid rgba(0,0,0,0.05); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; }
-        .addr-tag { color: var(--address-tag); font-weight: 800; font-size: 0.95rem; display: flex; align-items: center; gap: 4px; }
-        .brand-addr { font-size: 0.92rem; color: var(--main-text); font-weight: 700; line-height: 1.5; max-width: 90%; text-align: center; }
+        .header-bottom-addr { text-align: center; width: 100%; padding: 6px 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: all 0.3s ease; }
+        .addr-tag { color: var(--address-tag); font-weight: 800; font-size: 0.85rem; display: flex; align-items: center; gap: 4px; }
+        .brand-addr { font-size: 0.85rem; color: var(--main-text); font-weight: 700; line-height: 1.4; max-width: 85%; text-align: center; }
 
-        /* شريط الأقسام */
-        .category-nav { display: flex; overflow-x: auto; white-space: nowrap; padding: 15px 20px; gap: 28px; scrollbar-width: none; background: var(--glass); backdrop-filter: blur(20px); position: sticky; top: 190px; z-index: 999; border-bottom: 0.5px solid rgba(0,0,0,0.1); -webkit-overflow-scrolling: touch; }
+        /* --- شريط الأقسام المطور ليظل ثابتاً وظاهراً بالكامل وصغير الحجم عند النزول (Scroll) --- */
+        .category-nav { 
+          display: flex; overflow-x: auto; white-space: nowrap; padding: 12px 15px; gap: 20px; 
+          scrollbar-width: none; background: var(--glass); backdrop-filter: blur(20px); 
+          border-top: 1px solid rgba(0,0,0,0.04); border-bottom: 1px solid rgba(0,0,0,0.06); 
+          -webkit-overflow-scrolling: touch; transition: all 0.3s ease;
+        }
         .category-nav::-webkit-scrollbar { display: none; }
-        .cat-item { display: flex; flex-direction: column; align-items: center; min-width: 95px; cursor: pointer; flex-shrink: 0; }
-        .cat-img-box { width: 62px; height: 62px; border-radius: 18px; background: #e5e5ea; overflow: hidden; border: 2.5px solid transparent; transition: 0.3s; }
+        
+        .cat-item { display: flex; flex-direction: column; align-items: center; min-width: 80px; cursor: pointer; flex-shrink: 0; }
+        .cat-img-box { width: 55px; height: 55px; border-radius: 16px; background: #e5e5ea; overflow: hidden; border: 2px solid transparent; transition: all 0.3s ease; }
         .cat-img-box img { width: 100%; height: 100%; object-fit: cover; }
-        .cat-item.active .cat-img-box { border-color: var(--accent); transform: scale(1.08); }
-        .cat-item span { font-size: 0.82rem; font-weight: 700; color: var(--desc-text); margin-top: 8px; white-space: nowrap; text-align: center; padding: 0 4px; }
+        .cat-item.active .cat-img-box { border-color: var(--accent); transform: scale(1.05); box-shadow: 0 4px 10px rgba(211, 84, 0, 0.15); }
+        .cat-item span { font-size: 0.8rem; font-weight: 700; color: var(--desc-text); margin-top: 6px; white-space: nowrap; text-align: center; }
         .cat-item.active span { color: var(--main-text); font-weight: 800; }
+
+        /* تأثير تقليص الهيدر وتثبيت الأقسام الاحترافي عند السكرول */
+        body.scrolled header { padding: 4px 0 0 0; }
+        body.scrolled .header-logo-container { transform: scale(0); height: 0; width: 0; margin: 0; padding: 0; opacity: 0; }
+        body.scrolled .header-bottom-addr { transform: scale(0); height: 0; padding: 0; opacity: 0; margin: 0; }
+        body.scrolled .theme-toggle, body.scrolled .cart-trigger { top: 6px; height: 38px; width: 38px; font-size: 1rem; }
+        body.scrolled .category-nav { padding: 6px 15px; margin-top: 2px; }
 
         /* قائمة المنتجات */
         .menu-list { padding: 15px; max-width: 600px; margin: auto; }
@@ -158,8 +180,6 @@
         .remove-btn { color: #ff3b30; font-weight: 800; font-size: 0.75rem; cursor: pointer; }
         .user-fields input { background: var(--bg); border: none; padding: 16px; border-radius: 14px; width: 100%; margin-bottom: 10px; color: var(--main-text); text-align: right; }
         .submit-btn { background: #34c759; color: white; border: none; padding: 18px; border-radius: 18px; width: 100%; font-weight: 800; cursor: pointer; }
-        
-        /* تنسيق جملة رسوم التوصيل */
         .shipping-note { font-size: 0.75rem; color: var(--desc-text); font-weight: 600; display: block; margin-top: 2px; }
     </style>
 </head>
@@ -180,7 +200,7 @@
     <div id="splash-screen">
         <div class="loader-content">
             <div class="logo-wrapper">
-                <img src="./images/loogoo.jpg" class="loader-logo-big">
+                <img src="./images/loogoo.png" class="loader-logo-big">
                 <span class="chef-hand-sign">👌</span>
             </div>
             <h2 class="loader-text">مطبخ نشوي</h2>
@@ -189,26 +209,28 @@
         </div>
     </div>
 
-    <header>
-        <div class="header-top">
-            <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙</button>
-            <div class="header-logo-container">
-                <img src="./images/loogoo.jpg" class="header-logo">
-            </div>
-            <div class="cart-trigger-container">
-                <div class="cart-trigger" onclick="toggleCart(true)" id="cartBtn">
-                    <span class="badge" id="cartBadge">0</span>
-                    <span style="font-size: 1.3rem;">🛒</span>
+    <div class="sticky-wrapper">
+        <header>
+            <div class="header-top">
+                <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙</button>
+                <div class="header-logo-container">
+                    <img src="./images/loogoo.png" class="header-logo">
+                </div>
+                <div class="cart-trigger-container">
+                    <div class="cart-trigger" onclick="toggleCart(true)" id="cartBtn">
+                        <span class="badge" id="cartBadge">0</span>
+                        <span style="font-size: 1.2rem;">🛒</span>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="header-bottom-addr">
-            <span class="addr-tag">📍 العنوان:</span>
-            <span class="brand-addr">٣٨ السياحية الرابعة، وصلة دهشور، ٦ أكتوبر، بجوار نادي النادي</span>
-        </div>
-    </header>
+            <div class="header-bottom-addr">
+                <span class="addr-tag">📍 العنوان:</span>
+                <span class="brand-addr">٣٨ السياحية الرابعة، وصلة دهشور، ٦ أكتوبر، بجوار نادي النادي</span>
+            </div>
+        </header>
+        <div class="category-nav" id="catNav"></div>
+    </div>
 
-    <div class="category-nav" id="catNav"></div>
     <div id="menuList" class="menu-list"></div>
 
     <footer class="restaurant-footer">
@@ -249,6 +271,15 @@
         let menuData = [], cart = [];
         let currentTotal = 0; 
         let pendingItem = null;
+
+        // مراقبة حركة النزول (Scroll) لإخفاء وتكبير العناصر ديناميكياً لتثبيت الأقسام باحترافية
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                document.body.classList.add('scrolled');
+            } else {
+                document.body.classList.remove('scrolled');
+            }
+        });
 
         function toggleTheme() {
             document.body.classList.toggle('dark-mode');
@@ -293,7 +324,6 @@
                 preloadImages(menuData); renderNav();
                 setTimeout(() => {
                     document.getElementById('splash-screen').classList.add('splash-hidden');
-                    // تفعيل جافا سكريبت لتثبيت الـ PWA بشكل سريع جداً وسلس كأبلكيشن
                     if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js').catch(err => console.log(err)); }
                 }, 3200);
             } catch (e) { document.getElementById('splash-screen').classList.add('splash-hidden'); }
@@ -311,7 +341,12 @@
         }
 
         function filterCat(cat, el) {
-            if(el) { document.querySelectorAll('.cat-item').forEach(b => b.classList.remove('active')); el.classList.add('active'); }
+            if(el) { 
+                document.querySelectorAll('.cat-item').forEach(b => b.classList.remove('active')); 
+                el.classList.add('active');
+                // جعل القسم المختار يتحرك للمنتصف تلقائياً عند الضغط عليه لسهولة الاستخدام
+                el.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            }
             document.getElementById('menuList').innerHTML = menuData.filter(i => i.category === cat).map(item => `
                 <div class="food-card">
                     <div class="item-img-box"><img src="${item.img}" onerror="this.src='${IMAGES_PATH}default.jpg'"></div>
@@ -369,22 +404,22 @@
         }
 
         function updateCart() {
-            const badge = document.getElementById('cartBadge');
-            badge.innerText = cart.length; badge.classList.toggle('show', cart.length > 0);
-            currentTotal = 0;
-            document.getElementById('cartItemsList').innerHTML = cart.map((item, idx) => {
-                currentTotal += parseFloat(item.price);
-                return `
-                <div class="cart-item-card">
-                    <img src="${item.img}" class="cart-item-img" onerror="this.src='${IMAGES_PATH}default.jpg'">
-                    <div class="cart-item-info">
-                        <span class="cart-item-name">${item.name}</span>
-                        <span class="cart-item-price">${item.price} ج.م</span>
-                    </div>
-                    <span class="remove-btn" onclick="removeFromCart(${idx})">حذف</span>
-                </div>`;
-            }).join('');
-            document.getElementById('totalAmount').innerText = `${currentTotal} ج.م`;
+          const badge = document.getElementById('cartBadge');
+          badge.innerText = cart.length; badge.classList.toggle('show', cart.length > 0);
+          currentTotal = 0;
+          document.getElementById('cartItemsList').innerHTML = cart.map((item, idx) => {
+              currentTotal += parseFloat(item.price);
+              return `
+              <div class="cart-item-card">
+                  <img src="${item.img}" class="cart-item-img" onerror="this.src='${IMAGES_PATH}default.jpg'">
+                  <div class="cart-item-info">
+                      <span class="cart-item-name">${item.name}</span>
+                      <span class="cart-item-price">${item.price} ج.م</span>
+                  </div>
+                  <span class="remove-btn" onclick="removeFromCart(${idx})">حذف</span>
+              </div>`;
+          }).join('');
+          document.getElementById('totalAmount').innerText = `${currentTotal} ج.م`;
         }
 
         function removeFromCart(idx) { cart.splice(idx, 1); updateCart(); if(cart.length === 0) toggleCart(false); }
@@ -404,7 +439,6 @@
             const n = document.getElementById('uName').value, p = document.getElementById('uPhone').value, a = document.getElementById('uAddr').value;
             if(!n || !p || !a || cart.length === 0) return alert("يرجى إكمال البيانات واختيار الأصناف");
             
-            // إضافة العبارة المطلوبة للرسالة الجاهزة لتظهر على الواتساب بشكل فوري للعميل والمطعم
             let msg = `طلب جديد - مطبخ نشوي\n\n👤 الاسم: ${n}\n📱 الموبايل: ${p}\n📍 العنوان: ${a}\n\nالطلبات:\n` 
                       + cart.map(i => `- ${i.name} (${i.price} ج.م)`).join('\n')
                       + `\n\n💰 الإجمالي: ${currentTotal} ج.م + رسوم التوصيل\n⚠️ تأكيد: وافق العميل رسمياً في الموقع على أن التجهيز يستغرق 24 ساعة.`;
