@@ -10,7 +10,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="مطبخ نشوي">
-    <link rel="apple-touch-icon" href="images/loogoo.jpg">
+    <link class="brand-logo-img" rel="apple-touch-icon" href="images/loogoo.jpg">
     
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -24,6 +24,7 @@
             --glass: rgba(242, 242, 247, 0.8);
             --success: #34c759;
             --header-bg: #f2f2f7;
+            --blur-bg: rgba(255, 255, 255, 0.6);
         }
 
         body.dark-mode {
@@ -33,129 +34,88 @@
             --white: #1c1c1e;
             --glass: rgba(28, 28, 30, 0.8);
             --header-bg: #1c1c1e;
+            --blur-bg: rgba(0, 0, 0, 0.6);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; -webkit-tap-highlight-color: transparent; transition: background 0.3s, color 0.3s; }
         body { background-color: var(--bg); color: var(--main-text); line-height: 1.6; overflow-x: hidden; }
 
-        /* --- شاشة الترحيب --- */
+        /* --- شاشة الترحيب الاحترافية الجديدة (Cinematic Reveal) --- */
         #splash-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: var(--white); z-index: 9999;
             display: flex; justify-content: center; align-items: center;
-            transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+            transition: transform 0.8s cubic-bezier(0.85, 0, 0.15, 1);
         }
-        .loader-content { 
-            text-align: center; 
-            opacity: 0;
-            transform: translateY(30px);
-            animation: smoothReveal 1.2s cubic-bezier(0.215, 0.610, 0.355, 1) forwards;
-        }
-        .loader-logo-big {
-            width: 155px; height: 155px; border-radius: 50%;
-            margin-bottom: 25px; 
-            object-fit: cover; 
-            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
-            animation: gentlePulse 2.5s infinite ease-in-out 1.2s;
-        }
-        .loader-text { font-weight: 800; color: var(--accent); font-size: 2.2rem; margin-bottom: 8px; letter-spacing: -0.5px; }
-        .loader-slogan { font-size: 1.1rem; color: var(--desc-text); font-weight: 600; }
-        .loading-bar { width: 150px; height: 4px; background: rgba(0,0,0,0.05); margin: 35px auto 0 auto; border-radius: 10px; overflow: hidden; }
-        .loading-bar span { display: block; width: 0; height: 100%; background: var(--accent); animation: progress 2.2s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+        .loader-content { text-align: center; }
         
-        @keyframes smoothReveal { to { opacity: 1; transform: translateY(0); } }
-        @keyframes gentlePulse {
-            0%, 100% { transform: scale(1); box-shadow: 0 20px 50px rgba(0,0,0,0.15); }
-            50% { transform: scale(1.04); box-shadow: 0 25px 60px rgba(211, 84, 0, 0.25); }
+        .loader-logo-big {
+            width: 150px; height: 150px; border-radius: 50%;
+            margin-bottom: 25px; object-fit: cover; 
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            opacity: 0; filter: blur(10px); transform: scale(0.8);
+            animation: cinematicLogo 1.6s cubic-bezier(0.25, 1, 0.5, 1) forwards 0.2s;
+        }
+        
+        .loader-text, .loader-slogan, .loading-bar {
+            opacity: 0; transform: translateY(20px);
+        }
+        .loader-text { 
+            font-weight: 800; color: var(--accent); font-size: 2.3rem; margin-bottom: 6px; 
+            animation: cinematicText 1s cubic-bezier(0.25, 1, 0.5, 1) forwards 0.8s;
+        }
+        .loader-slogan { 
+            font-size: 1.1rem; color: var(--desc-text); font-weight: 600; 
+            animation: cinematicText 1s cubic-bezier(0.25, 1, 0.5, 1) forwards 1s;
+        }
+        .loading-bar { 
+            width: 140px; height: 3px; background: rgba(0,0,0,0.05); margin: 30px auto 0 auto; border-radius: 10px; overflow: hidden;
+            animation: cinematicText 1s cubic-bezier(0.25, 1, 0.5, 1) forwards 1.2s;
+        }
+        .loading-bar span { display: block; width: 0; height: 100%; background: var(--accent); animation: progress 1.8s cubic-bezier(0.4, 0, 0.2, 1) forwards 1.2s; }
+        
+        @keyframes cinematicLogo {
+            to { opacity: 1; filter: blur(0); transform: scale(1); box-shadow: 0 25px 50px rgba(211, 84, 0, 0.18); }
+        }
+        @keyframes cinematicText {
+            to { opacity: 1; transform: translateY(0); }
         }
         @keyframes progress { to { width: 100%; } }
         .splash-hidden { transform: translateY(-100%); pointer-events: none; }
 
         /* --- الهيدر --- */
         header { 
-            background: var(--header-bg); 
-            position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 15px rgba(0,0,0,0.06);
-            display: flex; flex-direction: column; align-items: center;
-            padding: 15px 0;
+            background: var(--header-bg); position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 15px rgba(0,0,0,0.06);
+            display: flex; flex-direction: column; align-items: center; padding: 15px 0;
         }
-
         .header-top { width: 100%; display: flex; align-items: center; justify-content: center; position: relative; margin-bottom: 10px; }
-        
-        .header-logo-container {
-            width: 115px; height: 115px; 
-            border-radius: 50%; background: white;
-            padding: 4px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); overflow: hidden;
-        }
+        .header-logo-container { width: 115px; height: 115px; border-radius: 50%; background: white; padding: 4px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); overflow: hidden; }
         .header-logo { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
-
-        .theme-toggle {
-            position: absolute; right: 20px; top: 0;
-            width: 45px; height: 45px; background: var(--bg); border-radius: 14px;
-            display: flex; align-items: center; justify-content: center; cursor: pointer;
-            font-size: 1.2rem; border: none; color: var(--main-text);
-        }
-
+        .theme-toggle { position: absolute; right: 20px; top: 0; width: 45px; height: 45px; background: var(--bg); border-radius: 14px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1.2rem; border: none; color: var(--main-text); }
         .cart-trigger-container { position: absolute; left: 20px; top: 0; }
-        
-        .cart-trigger {
-            width: 45px; height: 45px; background: var(--bg); border-radius: 14px;
-            display: flex; align-items: center; justify-content: center; position: relative;
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
+        .cart-trigger { width: 45px; height: 45px; background: var(--bg); border-radius: 14px; display: flex; align-items: center; justify-content: center; position: relative; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .cart-trigger.shake { animation: cartShake 0.5s ease-in-out; }
-        @keyframes cartShake {
-            0%, 100% { transform: scale(1) rotate(0deg); }
-            20%, 60% { transform: scale(1.15) rotate(-10deg); }
-            40%, 80% { transform: scale(1.15) rotate(10deg); }
-        }
-        
-        .badge {
-            position: absolute; top: -5px; right: -5px; background: #ff3b30;
-            color: white; font-size: 10px; font-weight: 800; width: 20px; height: 20px;
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            border: 2px solid white; transform: scale(0); transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
+        @keyframes cartShake { 0%, 100% { transform: scale(1) rotate(0deg); } 20%, 60% { transform: scale(1.15) rotate(-10deg); } 40%, 80% { transform: scale(1.15) rotate(10deg); } }
+        .badge { position: absolute; top: -5px; right: -5px; background: #ff3b30; color: white; font-size: 10px; font-weight: 800; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid white; transform: scale(0); transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .badge.show { transform: scale(1); }
-
-        .header-bottom-addr { 
-            text-align: center; width: 100%; padding: 8px 15px; 
-            border-top: 0.5px solid rgba(0,0,0,0.05); 
-            display: flex; align-items: center; justify-content: center; gap: 6px;
-        }
+        
+        .header-bottom-addr { text-align: center; width: 100%; padding: 8px 15px; border-top: 0.5px solid rgba(0,0,0,0.05); display: flex; align-items: center; justify-content: center; gap: 6px; }
         .addr-tag { color: var(--address-tag); font-weight: 800; font-size: 0.85rem; display: flex; align-items: center; gap: 4px; }
-        .brand-addr { font-size: 0.8rem; color: var(--main-text); font-weight: 600; }
+        .brand-addr { font-size: 0.8rem; color: var(--main-text); font-weight: 600; line-height: 1.4; }
 
         /* شريط الأقسام */
-        .category-nav {
-            display: flex; overflow-x: auto; white-space: nowrap; padding: 15px 20px; gap: 28px;
-            scrollbar-width: none; background: var(--glass); backdrop-filter: blur(20px);
-            position: sticky; top: 190px; z-index: 999; border-bottom: 0.5px solid rgba(0,0,0,0.1);
-            -webkit-overflow-scrolling: touch;
-        }
+        .category-nav { display: flex; overflow-x: auto; white-space: nowrap; padding: 15px 20px; gap: 28px; scrollbar-width: none; background: var(--glass); backdrop-filter: blur(20px); position: sticky; top: 190px; z-index: 999; border-bottom: 0.5px solid rgba(0,0,0,0.1); -webkit-overflow-scrolling: touch; }
         .category-nav::-webkit-scrollbar { display: none; }
-        
         .cat-item { display: flex; flex-direction: column; align-items: center; min-width: 95px; cursor: pointer; flex-shrink: 0; }
         .cat-img-box { width: 62px; height: 62px; border-radius: 18px; background: #e5e5ea; overflow: hidden; border: 2.5px solid transparent; transition: 0.3s; }
         .cat-img-box img { width: 100%; height: 100%; object-fit: cover; }
         .cat-item.active .cat-img-box { border-color: var(--accent); transform: scale(1.08); }
-        
-        .cat-item span { 
-            font-size: 0.82rem; 
-            font-weight: 700; 
-            color: var(--desc-text); 
-            margin-top: 8px; 
-            white-space: nowrap; 
-            text-align: center;
-            padding: 0 4px;
-        }
+        .cat-item span { font-size: 0.82rem; font-weight: 700; color: var(--desc-text); margin-top: 8px; white-space: nowrap; text-align: center; padding: 0 4px; }
         .cat-item.active span { color: var(--main-text); font-weight: 800; }
 
         /* قائمة المنتجات */
         .menu-list { padding: 15px; max-width: 600px; margin: auto; }
-        .food-card {
-            background: var(--white); border-radius: 22px; margin-bottom: 12px; display: flex;
-            padding: 12px; gap: 12px; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.03);
-        }
+        .food-card { background: var(--white); border-radius: 22px; margin-bottom: 12px; display: flex; padding: 12px; gap: 12px; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.03); }
         .item-img-box { width: 85px; height: 85px; border-radius: 18px; overflow: hidden; background: #e5e5ea; flex-shrink: 0; }
         .item-img-box img { width: 100%; height: 100%; object-fit: cover; }
         .food-info { flex: 1; position: relative; }
@@ -163,62 +123,47 @@
         .food-desc { font-size: 0.8rem; color: var(--desc-text); line-height: 1.3; margin: 4px 0; }
         .price-row { display: flex; justify-content: space-between; align-items: center; }
         .food-price { font-weight: 800; color: var(--accent); font-size: 0.95rem; }
+        .add-btn { background: var(--accent); color: white; border: none; width: 36px; height: 36px; border-radius: 50%; font-size: 1.4rem; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: bold; }
         
-        .add-btn { 
-            background: var(--accent); color: white; border: none; width: 36px; height: 36px; border-radius: 50%; 
-            font-size: 1.4rem; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: bold;
-        }
-        
-        /* --- تحديث إشعار التنبيه بأسلوب وشكل ولون جديد --- */
         .added-notice {
-            position: absolute; 
-            left: 45px; 
-            background: rgba(211, 84, 0, 0.12); /* خلفية بلون برتقالي هادئ */
-            color: var(--accent); /* لون الخط برتقالي غامق متناسق مع الهوية */
-            font-size: 0.72rem; 
-            font-weight: 800;
-            padding: 5px 12px; 
-            border-radius: 12px; 
-            opacity: 0; 
-            transform: translateY(8px); /* تأثير صعود رائع */
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            pointer-events: none;
-            box-shadow: 0 2px 8px rgba(211, 84, 0, 0.05);
+            position: absolute; left: 45px; background: rgba(211, 84, 0, 0.12); color: var(--accent);
+            font-size: 0.72rem; font-weight: 800; padding: 5px 12px; border-radius: 12px; opacity: 0; 
+            transform: translateY(8px); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); pointer-events: none;
         }
         .added-notice.show { opacity: 1; transform: translateY(0); }
 
-        /* --- تصميم صندوق التنبيه العلوي لـ الـ 24 ساعة --- */
-        .time-toast {
-            position: fixed; top: -100px; left: 50%; transform: translateX(-50%);
-            background: var(--white); color: var(--main-text);
-            padding: 14px 20px; border-radius: 20px; z-index: 99999;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
-            display: flex; align-items: center; gap: 10px; width: 90%; max-width: 420px;
-            border-right: 5px solid var(--accent);
-            transition: top 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        /* --- تصميم نافذة التأكيد الإجبارية الجديدة للـ 24 ساعة --- */
+        .confirm-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(8px);
+            z-index: 10000; display: none; justify-content: center; align-items: center;
+            padding: 20px; opacity: 0; transition: opacity 0.3s ease;
         }
-        .time-toast.show { top: 25px; }
-        .toast-icon { font-size: 1.4rem; }
-        .toast-text { font-size: 0.85rem; font-weight: 700; line-height: 1.4; }
+        .confirm-box {
+            background: var(--white); width: 100%; max-width: 360px;
+            border-radius: 26px; padding: 25px; text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+            transform: scale(0.85); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .confirm-overlay.open { display: flex; opacity: 1; }
+        .confirm-overlay.open .confirm-box { transform: scale(1); }
+        
+        .confirm-icon { font-size: 2.5rem; margin-bottom: 12px; display: inline-block; }
+        .confirm-title { font-weight: 800; font-size: 1.2rem; color: var(--accent); margin-bottom: 10px; }
+        .confirm-msg { font-size: 0.9rem; color: var(--main-text); font-weight: 600; line-height: 1.5; margin-bottom: 22px; }
+        
+        .confirm-buttons { display: flex; gap: 12px; }
+        .confirm-btn { flex: 1; padding: 13px; border: none; border-radius: 14px; font-weight: 700; font-size: 0.9rem; cursor: pointer; transition: 0.2s; }
+        .btn-yes { background: var(--accent); color: white; }
+        .btn-yes:active { transform: scale(0.96); }
+        .btn-no { background: var(--bg); color: var(--desc-text); }
 
-        .fly-item {
-            position: fixed; z-index: 9999; pointer-events: none;
-            width: 30px; height: 30px; background: var(--accent);
-            color: white; border-radius: 50%; display: flex;
-            align-items: center; justify-content: center; font-size: 15px;
-            transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1);
-        }
+        .fly-item { position: fixed; z-index: 9999; pointer-events: none; width: 30px; height: 30px; background: var(--accent); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 15px; transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1); }
 
         /* --- Footer --- */
-        .restaurant-footer {
-            padding: 30px 20px; text-align: center; background: var(--white);
-            border-top: 1px solid rgba(0,0,0,0.05); margin-top: 20px;
-        }
+        .restaurant-footer { padding: 30px 20px; text-align: center; background: var(--white); border-top: 1px solid rgba(0,0,0,0.05); margin-top: 20px; }
         .footer-phones { margin-bottom: 15px; }
-        .footer-phones a { 
-            display: block; color: var(--accent); text-decoration: none; 
-            font-weight: 800; font-size: 1.1rem; margin: 5px 0; 
-        }
+        .footer-phones a { display: block; color: var(--accent); text-decoration: none; font-weight: 800; font-size: 1.1rem; margin: 5px 0; }
         .footer-rights { font-size: 0.8rem; color: var(--main-text); font-weight: 600; margin-bottom: 5px; }
         .dev-credit { font-size: 0.85rem; color: var(--desc-text); font-weight: 700; }
         .dev-credit a { color: var(--address-tag); text-decoration: none; display: block; margin-top: 3px; }
@@ -226,26 +171,28 @@
         /* مودال السلة */
         .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; display: none; justify-content: center; align-items: flex-end; }
         .modal-content { background: var(--white); width: 100%; max-width: 500px; padding: 25px; border-radius: 30px 30px 0 0; max-height: 90vh; overflow-y: auto; color: var(--main-text); }
-        
-        .cart-item-card {
-            display: flex; align-items: center; gap: 12px; padding: 12px;
-            background: rgba(0,0,0,0.04); border-radius: 18px; margin-bottom: 10px;
-        }
+        .cart-item-card { display: flex; align-items: center; gap: 12px; padding: 12px; background: rgba(0,0,0,0.04); border-radius: 18px; margin-bottom: 10px; }
         .cart-item-img { width: 50px; height: 50px; border-radius: 12px; object-fit: cover; }
         .cart-item-info { flex: 1; }
         .cart-item-name { font-weight: 700; font-size: 0.9rem; color: var(--main-text); }
         .cart-item-price { color: var(--accent); font-weight: 800; font-size: 0.85rem; display: block; }
         .remove-btn { color: #ff3b30; font-weight: 800; font-size: 0.75rem; cursor: pointer; }
-
         .user-fields input { background: var(--bg); border: none; padding: 16px; border-radius: 14px; width: 100%; margin-bottom: 10px; color: var(--main-text); text-align: right; }
         .submit-btn { background: #34c759; color: white; border: none; padding: 18px; border-radius: 18px; width: 100%; font-weight: 800; cursor: pointer; }
     </style>
 </head>
 <body>
 
-    <div id="timeToast" class="time-toast">
-        <span class="toast-icon">🧑‍🍳</span>
-        <span class="toast-text">استلمنا طلبك.. تجهيز الأكل البيتي يستغرق 24 ساعة ليصنع بحب من أجلك ✨</span>
+    <div id="customConfirm" class="confirm-overlay">
+        <div class="confirm-box">
+            <span class="confirm-icon">🧑‍🍳</span>
+            <h3 class="confirm-title">تنبيه تجهيز الطلب</h3>
+            <p class="confirm-msg">هذا الصنف أكل بيتي ومطبخ نشوي يجهزه طازجاً لك، لذا يستغرق تحضيره 24 ساعة ليكون جاهزاً. هل أنت موافق على ذلك؟</p>
+            <div class="confirm-buttons">
+                <button class="confirm-btn btn-yes" id="confirmYesBtn">نعم، موافق</button>
+                <button class="confirm-btn btn-no" id="confirmNoBtn">إلغاء</button>
+            </div>
+        </div>
     </div>
 
     <div id="splash-screen">
@@ -272,7 +219,7 @@
         </div>
         <div class="header-bottom-addr">
             <span class="addr-tag">📍 العنوان:</span>
-            <span class="brand-addr">بنزينة 6 وطنية العاصمة</span>
+            <span class="brand-addr">٣٨ السياحية الرابعة، وصلة دهشور، ٦ أكتوبر، بجوار نادي النادي</span>
         </div>
     </header>
 
@@ -281,9 +228,8 @@
 
     <footer class="restaurant-footer">
         <div class="footer-phones">
-            <span style="font-weight: 800; font-size: 0.9rem;">📞 أرقام المطعم:</span>
-            <a href="tel:01034874663">01034874663</a>
-            <a href="tel:01008915741">01008915741</a>
+            <span style="font-weight: 800; font-size: 0.9rem;">📞 أرقام المطعم لاستقبال الطلبات:</span>
+            <a href="tel:01032654884">01032654884</a>
         </div>
         <p class="footer-rights">جميع الحقوق محفوظة لـ مطبخ نشوي 2026 ©</p>
         <div class="dev-credit">
@@ -314,7 +260,7 @@
         const IMAGES_PATH = "./images/"; 
         let menuData = [], cart = [];
         let currentTotal = 0; 
-        let toastTimeout;
+        let pendingItem = null; // لحفظ بيانات العنصر قبل الموافقة
 
         function toggleTheme() {
             document.body.classList.toggle('dark-mode');
@@ -322,20 +268,13 @@
         }
 
         function preloadImages(data) {
-            data.forEach(item => {
-                const img = new Image();
-                img.src = item.img;
-            });
+            data.forEach(item => { const img = new Image(); img.src = item.img; });
             const cats = [...new Set(data.map(i => i.category))];
-            cats.forEach(c => {
-                const img = new Image();
-                img.src = `${IMAGES_PATH}${c}.jpg`;
-            });
+            cats.forEach(c => { const img = new Image(); img.src = `${IMAGES_PATH}${c}.jpg`; });
         }
 
         function parseCSVLine(text) {
-            let p = '', r = [];
-            let q = false;
+            let p = '', r = []; let q = false;
             for (let i = 0; i < text.length; i++) {
                 let c = text[i];
                 if (c === '"') { q = !q; }
@@ -343,8 +282,7 @@
                 else if (c === '\r') { }
                 else { p += c; }
             }
-            r.push(p);
-            return r;
+            r.push(p); return r;
         }
 
         async function loadMenu() {
@@ -352,39 +290,24 @@
                 const response = await fetch(csvUrl);
                 const data = await response.text();
                 const lines = data.split('\n');
-                
                 menuData = [];
                 for(let i = 1; i < lines.length; i++) {
                     if(!lines[i].trim()) continue;
                     const col = parseCSVLine(lines[i]);
-                    
                     let categoryName = col[0]?.replace(/^["']|["']$/g, '').trim();
                     let itemName = col[1]?.replace(/^["']|["']$/g, '').trim();
                     let itemPrice = col[2]?.replace(/^["']|["']$/g, '').trim();
                     let itemDesc = col[3]?.replace(/^["']|["']$/g, '').trim() || "";
-                    
                     if(itemName) {
-                        menuData.push({
-                            category: categoryName,
-                            name: itemName,
-                            price: itemPrice,
-                            desc: itemDesc,
-                            img: `${IMAGES_PATH}${itemName}.jpg`
-                        });
+                        menuData.push({ category: categoryName, name: itemName, price: itemPrice, desc: itemDesc, img: `${IMAGES_PATH}${itemName}.jpg` });
                     }
                 }
-                
-                preloadImages(menuData);
-                renderNav();
+                preloadImages(menuData); renderNav();
                 setTimeout(() => {
                     document.getElementById('splash-screen').classList.add('splash-hidden');
-                    if ('serviceWorker' in navigator) {
-                        navigator.serviceWorker.register('sw.js').catch(err => console.log('SW failed:', err));
-                    }
-                }, 2500);
-            } catch (e) { 
-                document.getElementById('splash-screen').classList.add('splash-hidden'); 
-            }
+                    if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js').catch(err => console.log(err)); }
+                }, 2800);
+            } catch (e) { document.getElementById('splash-screen').classList.add('splash-hidden'); }
         }
 
         function renderNav() {
@@ -409,37 +332,48 @@
                         <div class="price-row">
                             <span class="food-price">${item.price} ج.م</span>
                             <span class="added-notice">أُضيف للسلة 🧑‍🍳</span>
-                            <button class="add-btn" onclick="addToCart(event, this, '${item.name}', ${item.price}, '${item.img}')">+</button>
+                            <button class="add-btn" onclick="triggerAddFlow(event, this, '${item.name}', ${item.price}, '${item.img}')">+</button>
                         </div>
                     </div>
                 </div>
             `).join('');
         }
 
-        function showTimeToast() {
-            const toast = document.getElementById('timeToast');
-            toast.classList.add('show');
-            clearTimeout(toastTimeout);
-            toastTimeout = setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3500); // يختفي بعد 3 ثوانٍ ونصف
+        // دالة تفعيل تدفق إضافة الصنف وفتح المودال الإجباري
+        function triggerAddFlow(e, btn, name, price, img) {
+            pendingItem = { clickEvent: { clientX: e.clientX, clientY: e.clientY }, button: btn, name, price, img };
+            const overlay = document.getElementById('customConfirm');
+            overlay.classList.add('open');
         }
 
-        function addToCart(e, btn, name, price, img) {
-            cart.push({name, price, img});
-            
-            // تشغيل تنبيه الـ 24 ساعة العلوي
-            showTimeToast();
+        // التعامل مع أزرار المودال الإجباري
+        document.getElementById('confirmYesBtn').addEventListener('click', () => {
+            if (pendingItem) {
+                executeAddToCart(pendingItem.clickEvent, pendingItem.button, pendingItem.name, pendingItem.price, pendingItem.img);
+            }
+            closeConfirmModal();
+        });
 
+        document.getElementById('confirmNoBtn').addEventListener('click', () => {
+            closeConfirmModal();
+        });
+
+        function closeConfirmModal() {
+            const overlay = document.getElementById('customConfirm');
+            overlay.classList.remove('open');
+            pendingItem = null;
+        }
+
+        // تنفيذ الإضافة الفعلية بعد موافقة العميل الإجبارية
+        function executeAddToCart(e, btn, name, price, img) {
+            cart.push({name, price, img});
             const notice = btn.previousElementSibling;
             notice.classList.add('show');
             setTimeout(() => notice.classList.remove('show'), 2000);
 
             const fly = document.createElement('div');
-            fly.className = 'fly-item';
-            fly.innerHTML = '🍳';
-            fly.style.left = e.clientX + 'px';
-            fly.style.top = e.clientY + 'px';
+            fly.className = 'fly-item'; fly.innerHTML = '🍳';
+            fly.style.left = e.clientX + 'px'; fly.style.top = e.clientY + 'px';
             document.body.appendChild(fly);
 
             const cartBtn = document.getElementById('cartBtn');
@@ -447,13 +381,11 @@
             setTimeout(() => {
                 fly.style.left = (cartPos.left + 20) + 'px';
                 fly.style.top = (cartPos.top + 20) + 'px';
-                fly.style.transform = 'scale(0.2)';
-                fly.style.opacity = '0';
+                fly.style.transform = 'scale(0.2)'; fly.style.opacity = '0';
             }, 10);
             
             setTimeout(() => { 
-                fly.remove(); 
-                updateCart();
+                fly.remove(); updateCart();
                 cartBtn.classList.add('shake');
                 setTimeout(() => cartBtn.classList.remove('shake'), 500);
             }, 700);
@@ -461,8 +393,7 @@
 
         function updateCart() {
             const badge = document.getElementById('cartBadge');
-            badge.innerText = cart.length;
-            badge.classList.toggle('show', cart.length > 0);
+            badge.innerText = cart.length; badge.classList.toggle('show', cart.length > 0);
             currentTotal = 0;
             document.getElementById('cartItemsList').innerHTML = cart.map((item, idx) => {
                 currentTotal += parseFloat(item.price);
@@ -480,19 +411,14 @@
         }
 
         function removeFromCart(idx) {
-            cart.splice(idx, 1);
-            updateCart();
+            cart.splice(idx, 1); updateCart();
             if(cart.length === 0) toggleCart(false);
         }
 
         function toggleCart(s) { 
             const modal = document.getElementById('cartModal');
-            if (s) {
-                modal.style.display = 'flex';
-                history.pushState({ cartOpen: true }, "");
-            } else {
-                modal.style.display = 'none';
-            }
+            if (s) { modal.style.display = 'flex'; history.pushState({ cartOpen: true }, ""); } 
+            else { modal.style.display = 'none'; }
         }
 
         window.addEventListener('popstate', function (event) {
@@ -506,9 +432,9 @@
             
             let msg = `طلب جديد - مطبخ نشوي\n\n👤 الاسم: ${n}\n📱 الموبايل: ${p}\n📍 العنوان: ${a}\n\nالطلبات:\n` 
                       + cart.map(i => `- ${i.name} (${i.price} ج.م)`).join('\n')
-                      + `\n\n💰 الإجمالي: ${currentTotal} ج.م\n⚠️ تنبيه: العميل علم أن التجهيز يستغرق 24 ساعة.`;
+                      + `\n\n💰 الإجمالي: ${currentTotal} ج.م\n⚠️ تأكيد: وافق العميل رسمياً في الموقع على أن التجهيز يستغرق 24 ساعة.`;
                       
-            window.open(`https://wa.me/201000452121?text=${encodeURIComponent(msg)}`);
+            window.open(`https://wa.me/201032654884?text=${encodeURIComponent(msg)}`);
         }
 
         loadMenu();
