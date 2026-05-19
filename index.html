@@ -260,8 +260,8 @@
     </div>
 
     <script>
-        // الرابط المحدث مع تحويله تلقائياً لصيغة التصدير البرمجية
-        const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRzOW2Z2TFsXm8b7uV8QcVqY1HKF0Qq-Dxyeq2c6avxRsm9PjqXGvM4yyIWRV30DqblUB3BEMeXpI-a/pub?output=csv';
+        // الرابط الجديد بعد ربطه وتحديث صيغة جلب البيانات لـ CSV تلقائياً
+        const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTN2hMpYgfUE_IZQkKuGFlgLbbxHgCNblTSdqSDD8_wxzORisUVLVI3_YdQ5OKMvDANSJ9jt3gU2uLR/pub?output=csv';
         const IMAGES_PATH = "./images/"; 
         let menuData = [], cart = [];
         let currentTotal = 0; 
@@ -283,7 +283,7 @@
             });
         }
 
-        // دالة احترافية لمعالجة الأسطر والتعامل مع الفواصل وعلامات التنصيص دون تشويه النصوص
+        // معالج متطور لسطور الـ CSV لمنع التداخل عند وجود فواصل في خلايا النصوص
         function parseCSVLine(text) {
             let p = '', r = [];
             let q = false;
