@@ -10,7 +10,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="أبو خضر">
-    <link rel="apple-touch-icon" href="images/logooo.jpg">
+    <link rel="apple-touch-icon" href="images/loogoo.jpg">
     
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -200,7 +200,7 @@
 
     <div id="splash-screen">
         <div class="loader-content">
-            <img src="./images/logooo.jpg" class="loader-logo-big">
+            <img src="./images/loogoo.jpg" class="loader-logo-big">
             <h2 class="loader-text">أبو خضر</h2>
             <p class="loader-slogan">طعم ياخدك في حته تانيه ✨</p>
             <div class="loading-bar"><span></span></div>
@@ -211,7 +211,7 @@
         <div class="header-top">
             <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙</button>
             <div class="header-logo-container">
-                <img src="./images/logooo.jpg" class="header-logo">
+                <img src="./images/loogoo.jpg" class="header-logo">
             </div>
             <div class="cart-trigger-container">
                 <div class="cart-trigger" onclick="toggleCart(true)" id="cartBtn">
@@ -260,7 +260,6 @@
     </div>
 
     <script>
-        // الرابط الجديد بعد ربطه وتحديث صيغة جلب البيانات لـ CSV تلقائياً
         const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTN2hMpYgfUE_IZQkKuGFlgLbbxHgCNblTSdqSDD8_wxzORisUVLVI3_YdQ5OKMvDANSJ9jt3gU2uLR/pub?output=csv';
         const IMAGES_PATH = "./images/"; 
         let menuData = [], cart = [];
@@ -283,7 +282,6 @@
             });
         }
 
-        // معالج متطور لسطور الـ CSV لمنع التداخل عند وجود فواصل في خلايا النصوص
         function parseCSVLine(text) {
             let p = '', r = [];
             let q = false;
