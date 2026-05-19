@@ -38,7 +38,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; -webkit-tap-highlight-color: transparent; transition: background 0.3s, color 0.3s; }
         body { background-color: var(--bg); color: var(--main-text); line-height: 1.6; overflow-x: hidden; }
 
-        /* --- شاشة الترحيب الجديدة (أنيميشن انسيابي وجذاب) --- */
+        /* --- شاشة الترحيب --- */
         #splash-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: var(--white); z-index: 9999;
@@ -63,13 +63,7 @@
         .loading-bar { width: 150px; height: 4px; background: rgba(0,0,0,0.05); margin: 35px auto 0 auto; border-radius: 10px; overflow: hidden; }
         .loading-bar span { display: block; width: 0; height: 100%; background: var(--accent); animation: progress 2.2s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
         
-        /* تأثيرات الحركة الانسيابية */
-        @keyframes smoothReveal {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+        @keyframes smoothReveal { to { opacity: 1; transform: translateY(0); } }
         @keyframes gentlePulse {
             0%, 100% { transform: scale(1); box-shadow: 0 20px 50px rgba(0,0,0,0.15); }
             50% { transform: scale(1.04); box-shadow: 0 25px 60px rgba(211, 84, 0, 0.25); }
@@ -131,7 +125,7 @@
         .addr-tag { color: var(--address-tag); font-weight: 800; font-size: 0.85rem; display: flex; align-items: center; gap: 4px; }
         .brand-addr { font-size: 0.8rem; color: var(--main-text); font-weight: 600; }
 
-        /* --- حل مشكلة تداخل أسماء الأقسام هنا --- */
+        /* شريط الأقسام */
         .category-nav {
             display: flex; overflow-x: auto; white-space: nowrap; padding: 15px 20px; gap: 28px;
             scrollbar-width: none; background: var(--glass); backdrop-filter: blur(20px);
@@ -145,7 +139,6 @@
         .cat-img-box img { width: 100%; height: 100%; object-fit: cover; }
         .cat-item.active .cat-img-box { border-color: var(--accent); transform: scale(1.08); }
         
-        /* تباعد كافٍ للنصوص ومنع كسر السطر أو تداخله */
         .cat-item span { 
             font-size: 0.82rem; 
             font-weight: 700; 
@@ -176,12 +169,37 @@
             font-size: 1.4rem; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: bold;
         }
         
+        /* --- تحديث إشعار التنبيه بأسلوب وشكل ولون جديد --- */
         .added-notice {
-            position: absolute; left: 45px; background: rgba(52, 199, 89, 0.15);
-            color: var(--success); font-size: 0.7rem; font-weight: 800;
-            padding: 4px 10px; border-radius: 10px; opacity: 0; transform: translateX(-10px); transition: 0.4s;
+            position: absolute; 
+            left: 45px; 
+            background: rgba(211, 84, 0, 0.12); /* خلفية بلون برتقالي هادئ */
+            color: var(--accent); /* لون الخط برتقالي غامق متناسق مع الهوية */
+            font-size: 0.72rem; 
+            font-weight: 800;
+            padding: 5px 12px; 
+            border-radius: 12px; 
+            opacity: 0; 
+            transform: translateY(8px); /* تأثير صعود رائع */
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            pointer-events: none;
+            box-shadow: 0 2px 8px rgba(211, 84, 0, 0.05);
         }
-        .added-notice.show { opacity: 1; transform: translateX(0); }
+        .added-notice.show { opacity: 1; transform: translateY(0); }
+
+        /* --- تصميم صندوق التنبيه العلوي لـ الـ 24 ساعة --- */
+        .time-toast {
+            position: fixed; top: -100px; left: 50%; transform: translateX(-50%);
+            background: var(--white); color: var(--main-text);
+            padding: 14px 20px; border-radius: 20px; z-index: 99999;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+            display: flex; align-items: center; gap: 10px; width: 90%; max-width: 420px;
+            border-right: 5px solid var(--accent);
+            transition: top 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .time-toast.show { top: 25px; }
+        .toast-icon { font-size: 1.4rem; }
+        .toast-text { font-size: 0.85rem; font-weight: 700; line-height: 1.4; }
 
         .fly-item {
             position: fixed; z-index: 9999; pointer-events: none;
@@ -224,6 +242,11 @@
     </style>
 </head>
 <body>
+
+    <div id="timeToast" class="time-toast">
+        <span class="toast-icon">🧑‍🍳</span>
+        <span class="toast-text">استلمنا طلبك.. تجهيز الأكل البيتي يستغرق 24 ساعة ليصنع بحب من أجلك ✨</span>
+    </div>
 
     <div id="splash-screen">
         <div class="loader-content">
@@ -291,6 +314,7 @@
         const IMAGES_PATH = "./images/"; 
         let menuData = [], cart = [];
         let currentTotal = 0; 
+        let toastTimeout;
 
         function toggleTheme() {
             document.body.classList.toggle('dark-mode');
@@ -384,7 +408,7 @@
                         <p class="food-desc">${item.desc}</p>
                         <div class="price-row">
                             <span class="food-price">${item.price} ج.م</span>
-                            <span class="added-notice">تم الطلب ✅</span>
+                            <span class="added-notice">أُضيف للسلة 🧑‍🍳</span>
                             <button class="add-btn" onclick="addToCart(event, this, '${item.name}', ${item.price}, '${item.img}')">+</button>
                         </div>
                     </div>
@@ -392,15 +416,28 @@
             `).join('');
         }
 
+        function showTimeToast() {
+            const toast = document.getElementById('timeToast');
+            toast.classList.add('show');
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3500); // يختفي بعد 3 ثوانٍ ونصف
+        }
+
         function addToCart(e, btn, name, price, img) {
             cart.push({name, price, img});
+            
+            // تشغيل تنبيه الـ 24 ساعة العلوي
+            showTimeToast();
+
             const notice = btn.previousElementSibling;
             notice.classList.add('show');
             setTimeout(() => notice.classList.remove('show'), 2000);
 
             const fly = document.createElement('div');
             fly.className = 'fly-item';
-            fly.innerHTML = '🍔';
+            fly.innerHTML = '🍳';
             fly.style.left = e.clientX + 'px';
             fly.style.top = e.clientY + 'px';
             document.body.appendChild(fly);
@@ -469,7 +506,7 @@
             
             let msg = `طلب جديد - مطبخ نشوي\n\n👤 الاسم: ${n}\n📱 الموبايل: ${p}\n📍 العنوان: ${a}\n\nالطلبات:\n` 
                       + cart.map(i => `- ${i.name} (${i.price} ج.م)`).join('\n')
-                      + `\n\n💰 الإجمالي: ${currentTotal} ج.م`;
+                      + `\n\n💰 الإجمالي: ${currentTotal} ج.م\n⚠️ تنبيه: العميل علم أن التجهيز يستغرق 24 ساعة.`;
                       
             window.open(`https://wa.me/201000452121?text=${encodeURIComponent(msg)}`);
         }
