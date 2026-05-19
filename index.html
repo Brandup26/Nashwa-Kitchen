@@ -21,7 +21,7 @@
           --accent: #d35400;
           --address-tag: #0a84ff;
           --white: #f2f2f7; 
-          --glass: rgba(242, 242, 247, 0.85);
+          --glass: rgba(242, 242, 247, 0.95);
           --success: #34c759;
           --header-bg: #f2f2f7;
           --blur-bg: rgba(255, 255, 255, 0.6);
@@ -32,7 +32,7 @@
           --main-text: #f2f2f7;
           --desc-text: #aeaeb2;
           --white: #1c1c1e;
-          --glass: rgba(28, 28, 30, 0.85);
+          --glass: rgba(28, 28, 30, 0.95);
           --header-bg: #1c1c1e;
           --blur-bg: rgba(0, 0, 0, 0.6);
         }
@@ -76,62 +76,54 @@
         @keyframes progress { to { width: 100%; } }
         .splash-hidden { transform: translateY(-100%); pointer-events: none; }
 
-        /* --- حاوية التثبيت الذكية للهيدر والأقسام معاً --- */
+        /* --- حاوية التثبيت الكاملة للجزء العلوي بالكامل --- */
         .sticky-wrapper {
           position: sticky;
           top: 0;
           z-index: 1000;
           background: var(--header-bg);
-          box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+          box-shadow: 0 4px 20px rgba(0,0,0,0.08);
         }
 
-        /* الهيدر العلوي */
+        /* الهيدر العلوي ثابت ولا يختفي */
         header { 
-          display: flex; flex-direction: column; align-items: center; padding: 12px 0 6px 0;
-          transition: all 0.4s ease;
+          display: flex; flex-direction: column; align-items: center; padding: 15px 0 10px 0;
         }
-        .header-top { width: 100%; display: flex; align-items: center; justify-content: center; position: relative; margin-bottom: 8px; }
-        .header-logo-container { width: 95px; height: 95px; border-radius: 50%; background: white; padding: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); overflow: hidden; transition: all 0.3s ease; }
+        .header-top { width: 100%; display: flex; align-items: center; justify-content: center; position: relative; margin-bottom: 12px; }
+        
+        /* إرجاع اللوجو لوضعه وأبعاده الأصلية تماماً ليكون واضحاً */
+        .header-logo-container { width: 115px; height: 115px; border-radius: 50%; background: white; padding: 4px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); overflow: hidden; }
         .header-logo { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
         
-        /* أزرار الهيدر الجانبية أصبحت ثابتة هندسياً لتسهيل طلب الأوردر */
-        .theme-toggle { position: absolute; right: 20px; top: 10px; width: 42px; height: 42px; background: var(--white); border-radius: 14px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1.1rem; border: none; color: var(--main-text); box-shadow: 0 2px 8px rgba(0,0,0,0.05); z-index: 1001; }
-        .cart-trigger-container { position: absolute; left: 20px; top: 10px; z-index: 1001; }
-        .cart-trigger { width: 42px; height: 42px; background: var(--white); border-radius: 14px; display: flex; align-items: center; justify-content: center; position: relative; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .theme-toggle { position: absolute; right: 20px; top: 0; width: 45px; height: 45px; background: var(--bg); border-radius: 14px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1.2rem; border: none; color: var(--main-text); box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .cart-trigger-container { position: absolute; left: 20px; top: 0; }
+        .cart-trigger { width: 45px; height: 45px; background: var(--bg); border-radius: 14px; display: flex; align-items: center; justify-content: center; position: relative; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
         .cart-trigger.shake { animation: cartShake 0.5s ease-in-out; }
         @keyframes cartShake { 0%, 100% { transform: scale(1) rotate(0deg); } 20%, 60% { transform: scale(1.15) rotate(-10deg); } 40%, 80% { transform: scale(1.15) rotate(10deg); } }
-        .badge { position: absolute; top: -5px; right: -5px; background: #ff3b30; color: white; font-size: 10px; font-weight: 800; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid var(--white); transform: scale(0); transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .badge { position: absolute; top: -5px; right: -5px; background: #ff3b30; color: white; font-size: 10px; font-weight: 800; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid white; transform: scale(0); transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .badge.show { transform: scale(1); }
         
-        .header-bottom-addr { text-align: center; width: 100%; padding: 6px 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: all 0.3s ease; }
-        .addr-tag { color: var(--address-tag); font-weight: 800; font-size: 0.85rem; display: flex; align-items: center; gap: 4px; }
-        .brand-addr { font-size: 0.85rem; color: var(--main-text); font-weight: 700; line-height: 1.4; max-width: 85%; text-align: center; }
+        .header-bottom-addr { text-align: center; width: 100%; padding: 10px 20px; border-top: 0.5px solid rgba(0,0,0,0.05); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; }
+        .addr-tag { color: var(--address-tag); font-weight: 800; font-size: 0.95rem; display: flex; align-items: center; gap: 4px; }
+        .brand-addr { font-size: 0.92rem; color: var(--main-text); font-weight: 700; line-height: 1.5; max-width: 90%; text-align: center; }
 
-        /* --- شريط الأقسام المطور ليظل ثابتاً وظاهراً بالكامل وصغير الحجم عند النزول (Scroll) --- */
+        /* شريط الأقسام يظل ملتصقاً أسفل الهيدر مباشرة ومثبت معه */
         .category-nav { 
-          display: flex; overflow-x: auto; white-space: nowrap; padding: 12px 15px; gap: 20px; 
+          display: flex; overflow-x: auto; white-space: nowrap; padding: 15px 20px; gap: 28px; 
           scrollbar-width: none; background: var(--glass); backdrop-filter: blur(20px); 
-          border-top: 1px solid rgba(0,0,0,0.04); border-bottom: 1px solid rgba(0,0,0,0.06); 
-          -webkit-overflow-scrolling: touch; transition: all 0.3s ease;
+          border-bottom: 0.5px solid rgba(0,0,0,0.1); -webkit-overflow-scrolling: touch; 
         }
         .category-nav::-webkit-scrollbar { display: none; }
         
-        .cat-item { display: flex; flex-direction: column; align-items: center; min-width: 80px; cursor: pointer; flex-shrink: 0; }
-        .cat-img-box { width: 55px; height: 55px; border-radius: 16px; background: #e5e5ea; overflow: hidden; border: 2px solid transparent; transition: all 0.3s ease; }
+        .cat-item { display: flex; flex-direction: column; align-items: center; min-width: 95px; cursor: pointer; flex-shrink: 0; }
+        .cat-img-box { width: 62px; height: 62px; border-radius: 18px; background: #e5e5ea; overflow: hidden; border: 2.5px solid transparent; transition: 0.3s; }
         .cat-img-box img { width: 100%; height: 100%; object-fit: cover; }
-        .cat-item.active .cat-img-box { border-color: var(--accent); transform: scale(1.05); box-shadow: 0 4px 10px rgba(211, 84, 0, 0.15); }
-        .cat-item span { font-size: 0.8rem; font-weight: 700; color: var(--desc-text); margin-top: 6px; white-space: nowrap; text-align: center; }
+        .cat-item.active .cat-img-box { border-color: var(--accent); transform: scale(1.08); }
+        .cat-item span { font-size: 0.82rem; font-weight: 700; color: var(--desc-text); margin-top: 8px; white-space: nowrap; text-align: center; padding: 0 4px; }
         .cat-item.active span { color: var(--main-text); font-weight: 800; }
 
-        /* تأثير تقليص الهيدر وتثبيت الأقسام الاحترافي عند السكرول */
-        body.scrolled header { padding: 4px 0 0 0; }
-        body.scrolled .header-logo-container { transform: scale(0); height: 0; width: 0; margin: 0; padding: 0; opacity: 0; }
-        body.scrolled .header-bottom-addr { transform: scale(0); height: 0; padding: 0; opacity: 0; margin: 0; }
-        body.scrolled .theme-toggle, body.scrolled .cart-trigger { top: 6px; height: 38px; width: 38px; font-size: 1rem; }
-        body.scrolled .category-nav { padding: 6px 15px; margin-top: 2px; }
-
-        /* قائمة المنتجات */
-        .menu-list { padding: 15px; max-width: 600px; margin: auto; }
+        /* قائمة المنتجات تبدأ بمسافة مناسبة أسفل الجزء العلوي الثابت */
+        .menu-list { padding: 15px; max-width: 600px; margin: 20px auto auto auto; }
         .food-card { background: var(--white); border-radius: 22px; margin-bottom: 12px; display: flex; padding: 12px; gap: 12px; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.03); }
         .item-img-box { width: 85px; height: 85px; border-radius: 18px; overflow: hidden; background: #e5e5ea; flex-shrink: 0; }
         .item-img-box img { width: 100%; height: 100%; object-fit: cover; }
@@ -219,7 +211,7 @@
                 <div class="cart-trigger-container">
                     <div class="cart-trigger" onclick="toggleCart(true)" id="cartBtn">
                         <span class="badge" id="cartBadge">0</span>
-                        <span style="font-size: 1.2rem;">🛒</span>
+                        <span style="font-size: 1.3rem;">🛒</span>
                     </div>
                 </div>
             </div>
@@ -271,15 +263,6 @@
         let menuData = [], cart = [];
         let currentTotal = 0; 
         let pendingItem = null;
-
-        // مراقبة حركة النزول (Scroll) لإخفاء وتكبير العناصر ديناميكياً لتثبيت الأقسام باحترافية
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                document.body.classList.add('scrolled');
-            } else {
-                document.body.classList.remove('scrolled');
-            }
-        });
 
         function toggleTheme() {
             document.body.classList.toggle('dark-mode');
@@ -344,7 +327,6 @@
             if(el) { 
                 document.querySelectorAll('.cat-item').forEach(b => b.classList.remove('active')); 
                 el.classList.add('active');
-                // جعل القسم المختار يتحرك للمنتصف تلقائياً عند الضغط عليه لسهولة الاستخدام
                 el.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
             }
             document.getElementById('menuList').innerHTML = menuData.filter(i => i.category === cat).map(item => `
