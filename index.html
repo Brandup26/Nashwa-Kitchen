@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أبو خضر | المنيو الرسمي</title>
+    <title>مطبخ نشوي | المنيو الرسمي</title>
     
     <link rel="manifest" href="manifest.json">
     
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="أبو خضر">
+    <meta name="apple-mobile-web-app-title" content="مطبخ نشوي">
     <link rel="apple-touch-icon" href="images/loogoo.jpg">
     
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -38,25 +38,43 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; -webkit-tap-highlight-color: transparent; transition: background 0.3s, color 0.3s; }
         body { background-color: var(--bg); color: var(--main-text); line-height: 1.6; overflow-x: hidden; }
 
-        /* --- شاشة الترحيب --- */
+        /* --- شاشة الترحيب الجديدة (أنيميشن انسيابي وجذاب) --- */
         #splash-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: var(--white); z-index: 9999;
             display: flex; justify-content: center; align-items: center;
-            transition: 0.8s cubic-bezier(0.65, 0, 0.35, 1);
+            transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
         }
-        .loader-content { text-align: center; }
+        .loader-content { 
+            text-align: center; 
+            opacity: 0;
+            transform: translateY(30px);
+            animation: smoothReveal 1.2s cubic-bezier(0.215, 0.610, 0.355, 1) forwards;
+        }
         .loader-logo-big {
-            width: 150px; height: 150px; border-radius: 40px;
-            margin-bottom: 20px; animation: pulse 1.5s infinite ease-in-out;
-            object-fit: cover; box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+            width: 155px; height: 155px; border-radius: 50%;
+            margin-bottom: 25px; 
+            object-fit: cover; 
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+            animation: gentlePulse 2.5s infinite ease-in-out 1.2s;
         }
-        .loader-text { font-weight: 800; color: var(--accent); font-size: 2rem; margin-bottom: 8px; }
-        .loader-slogan { font-size: 1.1rem; color: var(--desc-text); font-weight: 600; font-style: italic; }
-        .loading-bar { width: 180px; height: 6px; background: #eee; margin: 30px auto; border-radius: 10px; overflow: hidden; }
-        .loading-bar span { display: block; width: 0; height: 100%; background: var(--accent); animation: progress 2.5s linear forwards; }
-        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.06); } }
-        @keyframes progress { from { width: 0; } to { width: 100%; } }
+        .loader-text { font-weight: 800; color: var(--accent); font-size: 2.2rem; margin-bottom: 8px; letter-spacing: -0.5px; }
+        .loader-slogan { font-size: 1.1rem; color: var(--desc-text); font-weight: 600; }
+        .loading-bar { width: 150px; height: 4px; background: rgba(0,0,0,0.05); margin: 35px auto 0 auto; border-radius: 10px; overflow: hidden; }
+        .loading-bar span { display: block; width: 0; height: 100%; background: var(--accent); animation: progress 2.2s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+        
+        /* تأثيرات الحركة الانسيابية */
+        @keyframes smoothReveal {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes gentlePulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 20px 50px rgba(0,0,0,0.15); }
+            50% { transform: scale(1.04); box-shadow: 0 25px 60px rgba(211, 84, 0, 0.25); }
+        }
+        @keyframes progress { to { width: 100%; } }
         .splash-hidden { transform: translateY(-100%); pointer-events: none; }
 
         /* --- الهيدر --- */
@@ -71,10 +89,10 @@
         
         .header-logo-container {
             width: 115px; height: 115px; 
-            border-radius: 28px; background: white;
-            padding: 5px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); overflow: hidden;
+            border-radius: 50%; background: white;
+            padding: 4px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); overflow: hidden;
         }
-        .header-logo { width: 100%; height: 100%; border-radius: 23px; object-fit: cover; }
+        .header-logo { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
 
         .theme-toggle {
             position: absolute; right: 20px; top: 0;
@@ -90,9 +108,7 @@
             display: flex; align-items: center; justify-content: center; position: relative;
             transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .cart-trigger.shake {
-            animation: cartShake 0.5s ease-in-out;
-        }
+        .cart-trigger.shake { animation: cartShake 0.5s ease-in-out; }
         @keyframes cartShake {
             0%, 100% { transform: scale(1) rotate(0deg); }
             20%, 60% { transform: scale(1.15) rotate(-10deg); }
@@ -115,20 +131,31 @@
         .addr-tag { color: var(--address-tag); font-weight: 800; font-size: 0.85rem; display: flex; align-items: center; gap: 4px; }
         .brand-addr { font-size: 0.8rem; color: var(--main-text); font-weight: 600; }
 
-        /* شريط الأقسام */
+        /* --- حل مشكلة تداخل أسماء الأقسام هنا --- */
         .category-nav {
-            display: flex; overflow-x: auto; white-space: nowrap; padding: 15px 10px; gap: 15px;
+            display: flex; overflow-x: auto; white-space: nowrap; padding: 15px 20px; gap: 28px;
             scrollbar-width: none; background: var(--glass); backdrop-filter: blur(20px);
             position: sticky; top: 190px; z-index: 999; border-bottom: 0.5px solid rgba(0,0,0,0.1);
             -webkit-overflow-scrolling: touch;
         }
         .category-nav::-webkit-scrollbar { display: none; }
         
-        .cat-item { display: flex; flex-direction: column; align-items: center; min-width: 80px; cursor: pointer; }
-        .cat-img-box { width: 55px; height: 55px; border-radius: 16px; background: #e5e5ea; overflow: hidden; border: 2.5px solid transparent; transition: 0.3s; }
+        .cat-item { display: flex; flex-direction: column; align-items: center; min-width: 95px; cursor: pointer; flex-shrink: 0; }
+        .cat-img-box { width: 62px; height: 62px; border-radius: 18px; background: #e5e5ea; overflow: hidden; border: 2.5px solid transparent; transition: 0.3s; }
         .cat-img-box img { width: 100%; height: 100%; object-fit: cover; }
-        .cat-item.active .cat-img-box { border-color: var(--accent); transform: scale(1.05); }
-        .cat-item span { font-size: 0.75rem; font-weight: 700; color: var(--desc-text); margin-top: 5px; }
+        .cat-item.active .cat-img-box { border-color: var(--accent); transform: scale(1.08); }
+        
+        /* تباعد كافٍ للنصوص ومنع كسر السطر أو تداخله */
+        .cat-item span { 
+            font-size: 0.82rem; 
+            font-weight: 700; 
+            color: var(--desc-text); 
+            margin-top: 8px; 
+            white-space: nowrap; 
+            text-align: center;
+            padding: 0 4px;
+        }
+        .cat-item.active span { color: var(--main-text); font-weight: 800; }
 
         /* قائمة المنتجات */
         .menu-list { padding: 15px; max-width: 600px; margin: auto; }
@@ -201,8 +228,8 @@
     <div id="splash-screen">
         <div class="loader-content">
             <img src="./images/loogoo.jpg" class="loader-logo-big">
-            <h2 class="loader-text">أبو خضر</h2>
-            <p class="loader-slogan">طعم ياخدك في حته تانيه ✨</p>
+            <h2 class="loader-text">مطبخ نشوي</h2>
+            <p class="loader-slogan">الأكل البيتي علي أصوله 🍳✨</p>
             <div class="loading-bar"><span></span></div>
         </div>
     </div>
@@ -235,7 +262,7 @@
             <a href="tel:01034874663">01034874663</a>
             <a href="tel:01008915741">01008915741</a>
         </div>
-        <p class="footer-rights">جميع الحقوق محفوظة لـ مطعم أبو خضر 2026 ©</p>
+        <p class="footer-rights">جميع الحقوق محفوظة لـ مطبخ نشوي 2026 ©</p>
         <div class="dev-credit">
             Designed by eng / Anas Gaber shehata
             <a href="tel:01003800314">📞 01003800314</a>
@@ -440,7 +467,7 @@
             const n = document.getElementById('uName').value, p = document.getElementById('uPhone').value, a = document.getElementById('uAddr').value;
             if(!n || !p || !a || cart.length === 0) return alert("يرجى إكمال البيانات واختيار الأصناف");
             
-            let msg = `طلب جديد - مطعم أبو خضر\n\n👤 الاسم: ${n}\n📱 الموبايل: ${p}\n📍 العنوان: ${a}\n\nالطلبات:\n` 
+            let msg = `طلب جديد - مطبخ نشوي\n\n👤 الاسم: ${n}\n📱 الموبايل: ${p}\n📍 العنوان: ${a}\n\nالطلبات:\n` 
                       + cart.map(i => `- ${i.name} (${i.price} ج.م)`).join('\n')
                       + `\n\n💰 الإجمالي: ${currentTotal} ج.م`;
                       
