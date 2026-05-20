@@ -1,39 +1,21 @@
-const CACHE_NAME = 'nashwy-kitchen-v1';
-const ASSETS = [
-  'index.html',
-  'manifest.json',
-  'images/loogoo.jpg'
-];
+const CACHE_NAME = 'nashwy-v2';
 
-// تثبيت السيرفس وركر وحفظ الملفات الأساسية
 self.addEventListener('install', (e) => {
+  self.skipWaiting(); // تجبر السيستم يثبت فوراً بدون انتظار
   e.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(ASSETS);
+      return cache.addAll(['index.html', 'manifest.json']);
     })
   );
 });
 
-// تفعيل السيرفس وركر وحذف الكاش القديم
 self.addEventListener('activate', (e) => {
-  e.waitUntil(
-    caches.keys().then((keys) => {
-      return Promise.all(
-        keys.map((key) => {
-          if (key !== CACHE_NAME) {
-            return caches.delete(key);
-          }
-        })
-      );
-    })
-  );
+  e.waitUntil(self.clients.claim()); // تشغيل الأبلكيشن فوراً
 });
 
-// استراتيجية جلب البيانات (الشبكة أولاً، ثم الكاش لو مفيش نت)
 self.addEventListener('fetch', (e) => {
+  // استجابة سريعة جداً من الشبكة، ولو مفيش نت يروح للكاش
   e.respondWith(
-    fetch(e.request).catch(() => {
-      return caches.match(e.request);
-    })
+    fetch(e.request).catch(() => caches.match(e.request))
   );
 });
