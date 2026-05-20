@@ -5,7 +5,7 @@ const ASSETS = [
   'images/loogoo.jpg'
 ];
 
-// تثبيت الـ Service Worker وحفظ الملفات الأساسية
+// تثبيت السيرفس وركر وحفظ الملفات الأساسية
 self.addEventListener('install', (e) => {
   e.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
@@ -14,7 +14,7 @@ self.addEventListener('install', (e) => {
   );
 });
 
-// تشغيل وتحديث الكاش لضمان السرعة الفائقة وسلاسة التصفح
+// تفعيل السيرفس وركر وحذف الكاش القديم
 self.addEventListener('activate', (e) => {
   e.waitUntil(
     caches.keys().then((keys) => {
@@ -29,11 +29,11 @@ self.addEventListener('activate', (e) => {
   );
 });
 
-// استدعاء الملفات من الكاش مباشرة ليعمل الأبلكيشن بسرعة البرق بدون أي تأخير
+// استراتيجية جلب البيانات (الشبكة أولاً، ثم الكاش لو مفيش نت)
 self.addEventListener('fetch', (e) => {
   e.respondWith(
-    caches.match(e.request).then((cachedResponse) => {
-      return cachedResponse || fetch(e.request);
+    fetch(e.request).catch(() => {
+      return caches.match(e.request);
     })
   );
 });
