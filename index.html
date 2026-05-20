@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>مطبخ نشوي | المنيو الرسمي</title>
     
     <link rel="manifest" href="manifest.json">
@@ -76,54 +76,69 @@
         @keyframes progress { to { width: 100%; } }
         .splash-hidden { transform: translateY(-100%); pointer-events: none; }
 
-        /* --- تثبيت الجزء العلوي بالكامل كتلة واحدة مستقرة --- */
+        /* --- حاوية التثبيت الذكية والحل النهائي لـ PWA الأبلكيشن --- */
         .sticky-wrapper {
+          position: -webkit-sticky;
           position: sticky;
           top: 0;
           z-index: 1000;
           background: var(--header-bg);
           box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+          display: flex;
+          flex-direction: column;
+          /* إضافة الحماية لمنطقة النتوء العلوية في الموبايلات الحديثة */
+          padding-top: env(safe-area-inset-top, 0px);
         }
 
-        /* الهيدر العلوي */
         header { 
-          display: flex; flex-direction: column; align-items: center; padding: 15px 0 10px 0;
+          display: flex; 
+          flex-direction: column; 
+          align-items: center; 
+          padding: 10px 0 5px 0; /* تقليل البادينج الرأسي عشان نوفر مساحة للأقسام */
         }
-        .header-top { width: 100%; display: flex; align-items: center; justify-content: center; position: relative; margin-bottom: 12px; }
+        .header-top { width: 100%; display: flex; align-items: center; justify-content: center; position: relative; margin-bottom: 8px; }
         
-        /* أبعاد اللوجو الدائري الأصلي المظبوط */
-        .header-logo-container { width: 115px; height: 115px; border-radius: 50%; background: white; padding: 4px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); overflow: hidden; }
+        .header-logo-container { width: 105px; height: 105px; border-radius: 50%; background: white; padding: 4px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); overflow: hidden; }
         .header-logo { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
         
-        .theme-toggle { position: absolute; right: 20px; top: 0; width: 45px; height: 45px; background: var(--bg); border-radius: 14px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1.2rem; border: none; color: var(--main-text); box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
-        .cart-trigger-container { position: absolute; left: 20px; top: 0; }
-        .cart-trigger { width: 45px; height: 45px; background: var(--bg); border-radius: 14px; display: flex; align-items: center; justify-content: center; position: relative; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .theme-toggle { position: absolute; right: 20px; top: 5px; width: 42px; height: 42px; background: var(--bg); border-radius: 14px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1.1rem; border: none; color: var(--main-text); box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .cart-trigger-container { position: absolute; left: 20px; top: 5px; }
+        .cart-trigger { width: 42px; height: 42px; background: var(--bg); border-radius: 14px; display: flex; align-items: center; justify-content: center; position: relative; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
         .cart-trigger.shake { animation: cartShake 0.5s ease-in-out; }
         @keyframes cartShake { 0%, 100% { transform: scale(1) rotate(0deg); } 20%, 60% { transform: scale(1.15) rotate(-10deg); } 40%, 80% { transform: scale(1.15) rotate(10deg); } }
         .badge { position: absolute; top: -5px; right: -5px; background: #ff3b30; color: white; font-size: 10px; font-weight: 800; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid white; transform: scale(0); transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .badge.show { transform: scale(1); }
         
-        .header-bottom-addr { text-align: center; width: 100%; padding: 10px 20px; border-top: 0.5px solid rgba(0,0,0,0.05); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; }
-        .addr-tag { color: var(--address-tag); font-weight: 800; font-size: 0.95rem; display: flex; align-items: center; gap: 4px; }
-        .brand-addr { font-size: 0.92rem; color: var(--main-text); font-weight: 700; line-height: 1.5; max-width: 90%; text-align: center; }
+        .header-bottom-addr { text-align: center; width: 100%; padding: 6px 20px; border-top: 0.5px solid rgba(0,0,0,0.05); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; }
+        .addr-tag { color: var(--address-tag); font-weight: 800; font-size: 0.9rem; display: flex; align-items: center; gap: 4px; }
+        .brand-addr { font-size: 0.88rem; color: var(--main-text); font-weight: 700; line-height: 1.4; max-width: 95%; text-align: center; }
 
-        /* شريط الأقسام مثبت بشكل كامل أسفل العنوان */
+        /* تعديل شريط الأقسام لضمان الظهور الكامل والثبات داخل الأبلكيشن */
         .category-nav { 
-          display: flex; overflow-x: auto; white-space: nowrap; padding: 15px 20px; gap: 28px; 
-          scrollbar-width: none; background: var(--glass); backdrop-filter: blur(20px); 
-          border-bottom: 0.5px solid rgba(0,0,0,0.1); -webkit-overflow-scrolling: touch; 
+          display: flex; 
+          overflow-x: auto; 
+          white-space: nowrap; 
+          padding: 12px 15px; 
+          gap: 20px; 
+          scrollbar-width: none; 
+          background: var(--glass); 
+          backdrop-filter: blur(20px); 
+          border-bottom: 0.5px solid rgba(0,0,0,0.1); 
+          -webkit-overflow-scrolling: touch; 
+          position: relative;
+          z-index: 1001;
         }
         .category-nav::-webkit-scrollbar { display: none; }
         
-        .cat-item { display: flex; flex-direction: column; align-items: center; min-width: 95px; cursor: pointer; flex-shrink: 0; }
-        .cat-img-box { width: 62px; height: 62px; border-radius: 18px; background: #e5e5ea; overflow: hidden; border: 2.5px solid transparent; transition: 0.3s; }
+        .cat-item { display: flex; flex-direction: column; align-items: center; min-width: 85px; cursor: pointer; flex-shrink: 0; }
+        .cat-img-box { width: 58px; height: 58px; border-radius: 16px; background: #e5e5ea; overflow: hidden; border: 2.5px solid transparent; transition: 0.3s; }
         .cat-img-box img { width: 100%; height: 100%; object-fit: cover; }
-        .cat-item.active .cat-img-box { border-color: var(--accent); transform: scale(1.08); }
-        .cat-item span { font-size: 0.82rem; font-weight: 700; color: var(--desc-text); margin-top: 8px; white-space: nowrap; text-align: center; padding: 0 4px; }
+        .cat-item.active .cat-img-box { border-color: var(--accent); transform: scale(1.05); }
+        .cat-item span { font-size: 0.8rem; font-weight: 700; color: var(--desc-text); margin-top: 6px; white-space: nowrap; text-align: center; padding: 0 2px; }
         .cat-item.active span { color: var(--main-text); font-weight: 800; }
 
-        /* مسافة بداية قائمة المنتجات لتبدأ بعد الكتلة الثابتة بنعومة */
-        .menu-list { padding: 15px; max-width: 600px; margin: 20px auto auto auto; }
+        /* ضبط بداية قائمة المنتجات لتبتعد بنعومة */
+        .menu-list { padding: 15px; max-width: 600px; margin: 10px auto auto auto; }
         .food-card { background: var(--white); border-radius: 22px; margin-bottom: 12px; display: flex; padding: 12px; gap: 12px; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.03); }
         .item-img-box { width: 85px; height: 85px; border-radius: 18px; overflow: hidden; background: #e5e5ea; flex-shrink: 0; }
         .item-img-box img { width: 100%; height: 100%; object-fit: cover; }
